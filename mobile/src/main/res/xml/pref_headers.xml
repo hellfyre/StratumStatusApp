@@ -8,13 +8,7 @@
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="org.stratum0.stratumstatusapp.SettingsActivity$NotificationPreferenceFragment"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/pref_header_notifications" />
-
-    <header
-        android:fragment="org.stratum0.stratumstatusapp.SettingsActivity$DataSyncPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
-        android:title="@string/pref_header_data_sync" />
+        android:fragment="org.stratum0.stratumstatusapp.SettingsActivity$SSHPreferenceFragment"
+        android:title="@string/pref_header_ssh" />
 
 </preference-headers>
