@@ -4,8 +4,8 @@
 
     <header
         android:fragment="org.stratum0.stratumstatusapp.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general" />
+    <!--android:icon="@drawable/ic_info_black_24dp"-->
 
     <header
         android:fragment="org.stratum0.stratumstatusapp.SettingsActivity$SSHPreferenceFragment"

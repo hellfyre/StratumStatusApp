@@ -2,6 +2,7 @@ package org.stratum0.stratumstatusapp;
 
 
 import android.annotation.TargetApi;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -19,6 +20,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.List;
@@ -42,6 +44,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
+            //TODO: anpassen
             String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
@@ -87,15 +90,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     };
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //TODO: remove
+        FragmentManager fm = this.getFragmentManager();
+        Log.d("FOO", "Optionsitemselected: Backstackentrycount: " + fm.getBackStackEntryCount());
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -131,6 +137,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        //TODO: remove
+        /*FragmentManager fm = this.getFragmentManager();
+        fm.enableDebugLogging(true);*/
     }
 
     /**
@@ -168,6 +177,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
+                || SSHPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
