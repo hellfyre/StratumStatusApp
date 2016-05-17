@@ -4,6 +4,7 @@
     package="org.stratum0.stratumstatusapp">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"

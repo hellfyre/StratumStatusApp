@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import static org.stratum0.stratumstatusapp.SpaceStatus.getInstance;
@@ -14,12 +15,14 @@ import static org.stratum0.stratumstatusapp.SpaceStatus.getInstance;
 public class StatusActivity extends AppCompatActivity implements SpaceStatusListener {
 
     SpaceStatus status = getInstance();
-    TextView textStatus = (TextView) findViewById(R.id.text_status);
+    TextView textStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
+
+        textStatus = (TextView) findViewById(R.id.text_status);
     }
 
     @Override
@@ -40,6 +43,12 @@ public class StatusActivity extends AppCompatActivity implements SpaceStatusList
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void updateStatus(View view) {
+        SpaceStatusUpdateTask updateTask = new SpaceStatusUpdateTask(this);
+        updateTask.addListener(this);
+        updateTask.execute();
     }
 
     @Override
@@ -69,15 +78,15 @@ public class StatusActivity extends AppCompatActivity implements SpaceStatusList
         curStatusBuilder.append(System.getProperty("line.separator"));
 
         curStatusBuilder.append("Since: ");
-        curStatusBuilder.append(status.getSince());
+        curStatusBuilder.append(status.getSince().getTime());
         curStatusBuilder.append(System.getProperty("line.separator"));
 
         curStatusBuilder.append("Last Update: ");
-        curStatusBuilder.append(status.getLastUpdate());
+        curStatusBuilder.append(status.getLastUpdate().getTime());
         curStatusBuilder.append(System.getProperty("line.separator"));
 
         curStatusBuilder.append("Last Change: ");
-        curStatusBuilder.append(status.getLastChange());
+        curStatusBuilder.append(status.getLastChange().getTime());
 
         textStatus.setText(curStatusBuilder);
     }

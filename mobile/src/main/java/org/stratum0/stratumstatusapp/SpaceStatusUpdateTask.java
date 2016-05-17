@@ -2,7 +2,9 @@ package org.stratum0.stratumstatusapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -44,7 +46,7 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
         URL statusUrl;
 
         try {
-            statusUrl = new URL(prefs.getString("api_url", "http://status.stratum0.org"));
+            statusUrl = new URL(prefs.getString("api_url", "http://status.stratum0.org") + "/status.json");
             HttpURLConnection connection = (HttpURLConnection) statusUrl.openConnection();
             if(connection.getResponseCode() == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -61,6 +63,8 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
             Log.e(this.getClass().getName(), e.getLocalizedMessage());
             return status.getStatus();
         }
+
+        Log.d(this.getClass().getName(), "Result: " + result);
 
         try {
             JSONObject jsonRoot = new JSONObject(result);

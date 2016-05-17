@@ -16,7 +16,8 @@
         android:id="@+id/button_update"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="updateStatus" />
 
     <TextView
         android:id="@+id/text_status"
