@@ -20,7 +20,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     wearApp project(':wear')
     testCompile 'junit:junit:4.12'
+    compile 'com.jcraft:jsch:0.1.54'
 }

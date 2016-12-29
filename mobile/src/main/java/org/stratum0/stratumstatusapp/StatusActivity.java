@@ -9,7 +9,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toolbar;
+
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import static org.stratum0.stratumstatusapp.SpaceStatus.getInstance;
 
@@ -50,6 +58,15 @@ public class StatusActivity extends Activity implements SpaceStatusListener {
         SpaceStatusUpdateTask updateTask = new SpaceStatusUpdateTask(this);
         updateTask.addListener(this);
         updateTask.execute();
+    }
+
+    public void sshTest(View view) {
+
+        Context ctx = view.getContext();
+        SSHConnectTask t = new SSHConnectTask();
+        t.execute(ctx);
+
+
     }
 
     @Override

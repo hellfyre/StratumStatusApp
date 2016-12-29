@@ -2,7 +2,26 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-        android:key="ssh_key"
+        android:key="ssh_server"
+        android:title="@string/pref_title_ssh_server" />
+    <org.stratum0.stratumstatusapp.SSHPrivateKeyDialog
+        android:dialogLayout="@layout/pref_privkey"
         android:title="@string/pref_title_ssh_key" />
+    <EditTextPreference
+        android:key="ssh_user_open"
+        android:title="@string/pref_title_ssh_user_open"
+        android:defaultValue="auf" />
+    <EditTextPreference
+        android:key="ssh_user_close"
+        android:title="@string/pref_title_ssh_user_close"
+        android:defaultValue="zu" />
+    <CheckBoxPreference
+        android:key="ssh_ensure_wlan"
+        android:title="@string/pref_title_ssh_ensure_wlan"
+        android:defaultValue="" />
+    <EditTextPreference
+        android:key="ssh_which_wlans"
+        android:title="@string/pref_title_ssh_which_wlans"
+        android:defaultValue="Stratum0,Stratum0_5g" />
 
 </PreferenceScreen>

@@ -30,4 +30,23 @@
         android:layout_below="@id/button_update"
         android:text="Hello World!" />
 
+    <Button
+        android:text="ssh_test_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_status"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="21dp"
+        android:id="@+id/ssh_test_button"
+        android:onClick="sshTest" />
+
+    <TextView
+        android:text="ssh_test_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ssh_test_button"
+        android:layout_marginTop="13dp"
+        android:id="@+id/ssh_test_text" />
+
 </RelativeLayout>

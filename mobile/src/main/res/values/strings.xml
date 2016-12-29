@@ -64,4 +64,13 @@
     <string name="pref_title_api_url">API URL</string>
     <string name="pref_header_ssh">SSH</string>
     <string name="pref_title_ssh_key">SSH Private Key</string>
+    <string name="pref_title_ssh_server">SSH Server</string>
+    <string name="pref_title_ssh_user_open">Opening user</string>
+    <string name="pref_title_ssh_user_close">Closing user</string>
+    <string name="pref_title_ssh_ensure_wlan">Only execute in certain wifis</string>
+    <string name="pref_title_ssh_which_wlans">Certain wifis</string>
+    <string name="pref_privkey_multiline_hint">Paste private key here...</string>
+    <string name="pref_privkey_importfromfile_text">Import from file...</string>
+    <string name="pref_privkey_exporttofile_text">Export to file...</string>
+    <string name="pref_privkey_generate_text">Generate private key</string>
 </resources>
