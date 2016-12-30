@@ -4,9 +4,13 @@
     <EditTextPreference
         android:key="ssh_server"
         android:title="@string/pref_title_ssh_server" />
-    <org.stratum0.stratumstatusapp.SSHPrivateKeyDialog
-        android:dialogLayout="@layout/pref_privkey"
-        android:title="@string/pref_title_ssh_key" />
+    <Preference
+        android:title="@string/pref_title_ssh_key">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="org.stratum0.stratumstatusapp"
+            android:targetClass="org.stratum0.stratumstatusapp.SSHPrivateKeyDialog" />
+    </Preference>
     <EditTextPreference
         android:key="ssh_user_open"
         android:title="@string/pref_title_ssh_user_open"

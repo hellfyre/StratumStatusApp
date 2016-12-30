@@ -1,9 +1,11 @@
 package org.stratum0.stratumstatusapp;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.preference.DialogPreference;
-import android.util.AttributeSet;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,13 +21,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 /**
  * Created 2016-12-29
  * Author Matthias Uschok <dev@uschok.de>
  */
 
-public class SSHPrivateKeyDialog extends DialogPreference {
+public class SSHPrivateKeyDialog extends Activity {
 
     File sshFile;
     EditText privkeyMultiline;
@@ -34,15 +37,29 @@ public class SSHPrivateKeyDialog extends DialogPreference {
     Button privkeyGenerate;
 
     @Override
-    protected void onBindDialogView(View view) {
-        super.onBindDialogView(view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.pref_privkey);
 
-        Context context = getContext();
-        sshFile = new File(context.getFilesDir(), "ssh_priv_key");
-        privkeyMultiline = (EditText) view.findViewById(R.id.pref_privkey_multiline);
-        privkeyImportFromFile = (Button) view.findViewById(R.id.pref_privkey_importfromfile);
-        privkeyExportToFile = (Button) view.findViewById(R.id.pref_privkey_exporttofile);
-        privkeyGenerate = (Button) view.findViewById(R.id.pref_privkey_generate);
+        sshFile = new File(getFilesDir(), "ssh_priv_key");
+        privkeyMultiline = (EditText) findViewById(R.id.pref_privkey_multiline);
+        privkeyImportFromFile = (Button) findViewById(R.id.pref_privkey_importfromfile);
+        privkeyExportToFile = (Button) findViewById(R.id.pref_privkey_exporttofile);
+        privkeyGenerate = (Button) findViewById(R.id.pref_privkey_generate);
+
+        privkeyImportFromFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                importKeyFromFile();
+            }
+        });
+
+        privkeyExportToFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exportPrivateKey();
+            }
+        });
 
         privkeyGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,40 +69,84 @@ public class SSHPrivateKeyDialog extends DialogPreference {
         });
 
         updatePrivateKeyEdit();
-
-    }
-
-    public SSHPrivateKeyDialog(Context context, AttributeSet attrs) {
-        super(context, attrs);
     }
 
     @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        super.onDialogClosed(positiveResult);
+    protected void onPause() {
+        super.onPause();
 
-        if (positiveResult) {
-            Context context = getContext();
-
-            if (!sshFile.exists()) {
-                try {
-                    sshFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast errorToast = new Toast(context);
-                    errorToast.setText("Error saving private key...");
-                    errorToast.show();
-                    return;
-                }
+        if (!sshFile.exists()) {
+            try {
+                sshFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Error saving private key...", Toast.LENGTH_SHORT).show();
+                return;
             }
+        }
+
+        try {
+            FileOutputStream sshFileOutputStream = new FileOutputStream(sshFile);
+            sshFileOutputStream.write(privkeyMultiline.getText().toString().getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 42 && requestCode != 0) {
+            Uri fileUri = data.getData();
+            File importFile = new File(fileUri.getPath());
+
+            Log.d("SSH", "Trying to open file " + fileUri.getPath());
 
             try {
-                FileOutputStream sshFileOutputStream = new FileOutputStream(sshFile);
-                sshFileOutputStream.write(privkeyMultiline.getText().toString().getBytes());
+                BufferedReader sshImportFileReader = new BufferedReader(new FileReader(importFile));
+                StringBuilder sshImportedKey = new StringBuilder();
+                String line;
+
+                while((line = sshImportFileReader.readLine()) != null) {
+                    sshImportedKey.append(line).append("\n");
+                }
+                sshImportedKey.deleteCharAt(sshImportedKey.length()-1);
+
+                sshImportFileReader.close();
+
+                Log.d("SSH", "Read file. Contents: " + sshImportedKey.toString());
+
+                privkeyMultiline.setText(sshImportedKey.toString());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void exportPrivateKey() {
+        File extStorage = Environment.getExternalStorageDirectory();
+        StringBuilder extFileName = new StringBuilder(extStorage.getPath());
+        extFileName.append("/s0privateSSHkey");
+
+        try {
+            File extFile = new File(extFileName.toString());
+            extFile.createNewFile();
+
+            FileOutputStream extOutStream = new FileOutputStream(extFile);
+            OutputStreamWriter extFileOut = new OutputStreamWriter(extOutStream);
+            extFileOut.write(privkeyMultiline.getText().toString());
+            extFileOut.write("\n");
+            extFileOut.close();
+            extOutStream.close();
+
+            Toast.makeText(this, "Wrote file to " + extFileName.toString(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -111,7 +172,7 @@ public class SSHPrivateKeyDialog extends DialogPreference {
         fileIntent.setType("*/*");
         fileIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-            
+        startActivityForResult(fileIntent, 42);
     }
 
     private void updatePrivateKeyEdit() {

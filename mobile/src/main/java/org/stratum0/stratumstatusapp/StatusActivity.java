@@ -10,15 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import static org.stratum0.stratumstatusapp.SpaceStatus.getInstance;
 
 public class StatusActivity extends Activity implements SpaceStatusListener {
