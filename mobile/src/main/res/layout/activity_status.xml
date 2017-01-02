@@ -8,45 +8,73 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.stratum0.stratumstatusapp.StatusActivity">
-    <android.widget.Toolbar
-        android:id="@+id/settings_toolbar"
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize" />
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Update"
-        android:id="@+id/button_update"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/settings_toolbar"
-        android:onClick="updateStatus" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/cardview">
 
-    <TextView
-        android:id="@+id/text_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/button_update"
-        android:text="Hello World!" />
 
-    <Button
-        android:text="ssh_test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_status"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="21dp"
-        android:id="@+id/ssh_test_button"
-        android:onClick="sshTest" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:text="ssh_test_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ssh_test_button"
-        android:layout_marginTop="13dp"
-        android:id="@+id/ssh_test_text" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp" >
+
+                <ImageView
+                    android:src="@drawable/stratum0_logo_geschlossen"
+                    android:layout_width="@android:dimen/notification_large_icon_width"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView"
+                    android:scaleType="fitStart"
+                    android:cropToPadding="false"
+                    android:adjustViewBounds="true" />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/text_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hello World!" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Update"
+                    android:id="@+id/button_update"
+                    android:onClick="updateStatus"
+                    android:layout_weight="1"
+                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
+
+                <Button
+                    android:text="ssh_test_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ssh_test_button"
+                    android:onClick="sshTest"
+                    android:layout_weight="1"
+                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

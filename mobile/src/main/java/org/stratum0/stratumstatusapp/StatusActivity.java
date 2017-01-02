@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+
 import static org.stratum0.stratumstatusapp.SpaceStatus.getInstance;
 
 public class StatusActivity extends Activity implements SpaceStatusListener {
@@ -67,6 +69,7 @@ public class StatusActivity extends Activity implements SpaceStatusListener {
 
     @Override
     public void onPostSpaceStatusUpdate(Context context) {
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
         StringBuilder curStatusBuilder = new StringBuilder();
         curStatusBuilder.append("Status: ");
         switch (status.getStatus()) {
@@ -87,15 +90,15 @@ public class StatusActivity extends Activity implements SpaceStatusListener {
         curStatusBuilder.append(System.getProperty("line.separator"));
 
         curStatusBuilder.append("Since: ");
-        curStatusBuilder.append(status.getSince().getTime());
+        curStatusBuilder.append(df.format(status.getSince().getTime()));
         curStatusBuilder.append(System.getProperty("line.separator"));
 
         curStatusBuilder.append("Last Update: ");
-        curStatusBuilder.append(status.getLastUpdate().getTime());
+        curStatusBuilder.append(df.format(status.getLastUpdate().getTime()));
         curStatusBuilder.append(System.getProperty("line.separator"));
 
         curStatusBuilder.append("Last Change: ");
-        curStatusBuilder.append(status.getLastChange().getTime());
+        curStatusBuilder.append(df.format(status.getLastChange().getTime()));
 
         textStatus.setText(curStatusBuilder);
     }
