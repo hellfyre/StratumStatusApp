@@ -56,10 +56,20 @@ public class StatusActivity extends Activity implements SpaceStatusListener {
     public void sshTest(View view) {
 
         Context ctx = view.getContext();
-        SSHConnectTask t = new SSHConnectTask();
-        t.execute(ctx);
+        SSHConnectTask t = new SSHConnectTask(ctx);
+        t.execute("test");
+    }
 
+    public void sshDoorOpen(View view) {
+        Context context = view.getContext();
+        SSHConnectTask sshConnectTask = new SSHConnectTask(context);
+        sshConnectTask.execute("open");
+    }
 
+    public void sshDoorClose(View view) {
+        Context context = view.getContext();
+        SSHConnectTask sshConnectTask = new SSHConnectTask(context);
+        sshConnectTask.execute("close");
     }
 
     @Override
