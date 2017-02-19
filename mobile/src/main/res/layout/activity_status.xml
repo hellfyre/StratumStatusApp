@@ -77,4 +77,55 @@
 
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cardview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ssh_open_button"
+                    android:onClick="sshDoorOpen"
+                    android:layout_weight="1"
+                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
+
+                <Button
+                    android:text="Close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ssh_close_button"
+                    android:onClick="sshDoorClose"
+                    android:layout_weight="1"
+                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:text="The upper door, dude!"
+            android:textAlignment="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView" />
+
+    </android.support.v7.widget.CardView>
+
 </RelativeLayout>

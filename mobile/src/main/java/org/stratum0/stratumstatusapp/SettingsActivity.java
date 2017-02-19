@@ -211,7 +211,6 @@ public class SettingsActivity extends PreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("ssh_server"));
-//            bindPreferenceSummaryToValue(findPreference("ssh_key"));
             bindPreferenceSummaryToValue(findPreference("ssh_user_open"));
             bindPreferenceSummaryToValue(findPreference("ssh_user_close"));
             bindPreferenceSummaryToValue(findPreference("ssh_which_wlans"));

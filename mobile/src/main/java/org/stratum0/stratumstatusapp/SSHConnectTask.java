@@ -1,9 +1,12 @@
 package org.stratum0.stratumstatusapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -16,17 +19,25 @@ import java.io.File;
  * Author Matthias Uschok <dev@uschok.de>
  */
 
-public class SSHConnectTask extends AsyncTask <Context, Void, Void> {
+public class SSHConnectTask extends AsyncTask <String, Void, String> {
+    private Context context;
+
+    public SSHConnectTask(Context context) {
+        this.context = context;
+    }
 
     @Override
-    protected Void doInBackground(Context... contexts) {
+    protected String doInBackground(String... strings) {
 
-        File sshFile = new File(contexts[0].getFilesDir(), "ssh_priv_key");
+        File sshFile = new File(this.context.getFilesDir(), "ssh_priv_key");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
+        String user = prefs.getString("ssh_user_" + strings[0].toLowerCase(), "zu");
+        String server = prefs.getString("ssh_server", "localhost");
 
         JSch jsch = new JSch();
         Session sshSession = null;
         try {
-            sshSession = jsch.getSession("hellfyre", "134.169.108.11");
+            sshSession = jsch.getSession(user, server);
             NullUserInfo nui = new NullUserInfo();
             sshSession.setUserInfo(nui);
         } catch (JSchException e) {
@@ -42,25 +53,33 @@ public class SSHConnectTask extends AsyncTask <Context, Void, Void> {
         Log.d("SSH", "Trying to connect...");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        sshSession.setOutputStream(baos);
+        baos.write("Output: ".getBytes(), 0, 8);
 
+
+        Channel channel = null;
         try {
-            sshSession.connect();
+            sshSession.connect(10000);
 
-            Log.d("SSH", "Output:");
-            String output = new String(baos.toByteArray());
-            Log.d("SSH", output);
+            channel = sshSession.openChannel("shell");
+            channel.setOutputStream(baos, true);
 
-            sshSession.disconnect();
+            channel.connect(10000);
+
+            while(channel.isConnected()) {
+                //wait
+            }
+
+            Log.d("SSH", baos.toString());
 
         } catch (JSchException e) {
             Log.d("SSH", "Connect NOT successful");
             e.printStackTrace();
+            return "Could not connect";
         }
 
-        Log.d("SSH", "Connect successful \\o/");
+        Log.d("SSH", "Connect successful");
 
-        return null;
+        return baos.toString();
     }
 }
 
