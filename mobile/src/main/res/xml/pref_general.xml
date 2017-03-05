@@ -22,13 +22,19 @@
             android:key="ssh_server"
             android:title="@string/pref_ssh_server_title"
             android:inputType="textNoSuggestions" />
-        <Preference
+        <PreferenceScreen
             android:title="@string/pref_ssh_key_title">
+            <org.stratum0.stratumstatusapp.SSHPrivateKeyPreference
+                android:title="@string/pref_ssh_key_title"
+                />
+        </PreferenceScreen>
+        <!-- <Preference
+            android:title="legacy">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="org.stratum0.stratumstatusapp"
                 android:targetClass="org.stratum0.stratumstatusapp.SSHPrivateKeyDialog" />
-        </Preference>
+        </Preference> -->
         <EditTextPreference
             android:key="ssh_user_open"
             android:title="@string/pref_ssh_user_open_title"
