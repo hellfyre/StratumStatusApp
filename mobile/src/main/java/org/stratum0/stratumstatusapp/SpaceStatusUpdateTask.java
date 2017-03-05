@@ -2,9 +2,7 @@ package org.stratum0.stratumstatusapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -27,7 +25,7 @@ import java.util.GregorianCalendar;
  */
 public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.Status> {
 
-    private ArrayList<SpaceStatusListener> receiverList = new ArrayList<>();
+    private ArrayList<SpaceStatusUpdateListener> receiverList = new ArrayList<>();
     private SpaceStatus status;
     private Context context;
 
@@ -101,7 +99,7 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        for (SpaceStatusListener receiver : receiverList) {
+        for (SpaceStatusUpdateListener receiver : receiverList) {
             receiver.onPreSpaceStatusUpdate(context);
         }
     }
@@ -109,12 +107,12 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
     @Override
     protected void onPostExecute(SpaceStatus.Status status) {
         super.onPostExecute(status);
-        for (SpaceStatusListener receiver : receiverList) {
+        for (SpaceStatusUpdateListener receiver : receiverList) {
             receiver.onPostSpaceStatusUpdate(context);
         }
     }
 
-    public void addListener(SpaceStatusListener receiver) {
+    public void addListener(SpaceStatusUpdateListener receiver) {
         receiverList.add(receiver);
     }
 

@@ -13,6 +13,7 @@ import com.jcraft.jsch.Session;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created 2016-12-28
@@ -20,6 +21,8 @@ import java.io.File;
  */
 
 public class SSHConnectTask extends AsyncTask <String, Void, String> {
+
+    private ArrayList<SSHConnectListener> receiverList = new ArrayList<>();
     private Context context;
 
     public SSHConnectTask(Context context) {
@@ -80,6 +83,18 @@ public class SSHConnectTask extends AsyncTask <String, Void, String> {
         Log.d("SSH", "Connect successful");
 
         return baos.toString();
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        for (SSHConnectListener receiver : receiverList) {
+            receiver.onPostSSHConnect(s);
+        }
+    }
+
+    public void addListener(SSHConnectListener receiver) {
+        receiverList.add(receiver);
     }
 }
 

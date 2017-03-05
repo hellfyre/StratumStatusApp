@@ -8,13 +8,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import static org.stratum0.stratumstatusapp.SpaceStatus.getInstance;
 
-public class StatusActivity extends Activity implements SpaceStatusListener {
+public class StatusActivity extends Activity implements SpaceStatusUpdateListener, SpaceStatusChangeListener, SSHConnectListener {
 
     SpaceStatus status = getInstance();
     TextView textStatus;
@@ -107,9 +111,15 @@ public class StatusActivity extends Activity implements SpaceStatusListener {
         curStatusBuilder.append(df.format(status.getLastUpdate().getTime()));
         curStatusBuilder.append(System.getProperty("line.separator"));
 
-        curStatusBuilder.append("Last Change: ");
-        curStatusBuilder.append(df.format(status.getLastChange().getTime()));
+    @Override
+    public void onPostSSHConnect(String result) {
+        testSSH.setText("Door says: " + result);
+    }
 
-        textStatus.setText(curStatusBuilder);
+    @Override
+    public void onPostSpaceStatusChange(Context context, Integer statusCode) {
+        if (statusCode == 200) {
+            updateStatus();
+        }
     }
 }
