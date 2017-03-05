@@ -91,10 +91,35 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/cardview"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="23dp">
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp">
+
+                <ImageView
+                    android:src="@drawable/door"
+                    android:layout_width="@android:dimen/notification_large_icon_width"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitStart"
+                    android:cropToPadding="false"
+                    android:adjustViewBounds="true" />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="The upper door, dude!"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_ssh" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -119,16 +144,8 @@
                     android:layout_weight="1"
                     style="@android:style/Widget.Material.Button.Borderless.Colored" />
             </LinearLayout>
-        </LinearLayout>
 
-        <TextView
-            android:text="The upper door, dude!"
-            android:textAlignment="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView" />
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
