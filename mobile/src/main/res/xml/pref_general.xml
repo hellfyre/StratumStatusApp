@@ -3,18 +3,18 @@
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
-        android:defaultValue="@string/pref_default_name"
+        android:defaultValue="@string/pref_name_default"
         android:key="name"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_title_name" />
+        android:title="@string/pref_name_title" />
 
     <EditTextPreference
-        android:defaultValue="@string/pref_default_api_url"
+        android:defaultValue="@string/pref_api_url_default"
         android:key="api_url"
         android:maxLines="1"
         android:selectAllOnFocus="true"
-        android:title="@string/pref_title_api_url" />
+        android:title="@string/pref_api_url_title" />
 
 </PreferenceScreen>

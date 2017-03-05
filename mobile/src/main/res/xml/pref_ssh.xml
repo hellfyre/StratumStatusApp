@@ -3,10 +3,10 @@
 
     <EditTextPreference
         android:key="ssh_server"
-        android:title="@string/pref_title_ssh_server"
+        android:title="@string/pref_ssh_server_title"
         android:inputType="textNoSuggestions" />
     <Preference
-        android:title="@string/pref_title_ssh_key">
+        android:title="@string/pref_ssh_key_title">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="org.stratum0.stratumstatusapp"
@@ -14,21 +14,21 @@
     </Preference>
     <EditTextPreference
         android:key="ssh_user_open"
-        android:title="@string/pref_title_ssh_user_open"
+        android:title="@string/pref_ssh_user_open_title"
         android:defaultValue="auf"
         android:inputType="textNoSuggestions" />
     <EditTextPreference
         android:key="ssh_user_close"
-        android:title="@string/pref_title_ssh_user_close"
+        android:title="@string/pref_ssh_user_close_title"
         android:defaultValue="zu"
         android:inputType="textNoSuggestions" />
     <CheckBoxPreference
         android:key="ssh_ensure_wlan"
-        android:title="@string/pref_title_ssh_ensure_wlan"
+        android:title="@string/pref_ssh_ensure_wlan_title"
         android:defaultValue="" />
     <EditTextPreference
         android:key="ssh_which_wlans"
-        android:title="@string/pref_title_ssh_which_wlans"
+        android:title="@string/pref_ssh_which_wlans_title"
         android:defaultValue="Stratum0,Stratum0_5g" />
 
 </PreferenceScreen>
