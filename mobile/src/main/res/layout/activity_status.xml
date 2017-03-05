@@ -46,7 +46,7 @@
                     android:id="@+id/text_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hello World!" />
+                    android:text="Status unknown" />
 
             </LinearLayout>
 
@@ -58,18 +58,18 @@
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Update"
-                    android:id="@+id/button_update"
-                    android:onClick="updateStatus"
+                    android:text="@string/button_open_title"
+                    android:id="@+id/button_open"
+                    android:onClick="buttonOpenClose"
                     android:layout_weight="1"
                     style="@android:style/Widget.Material.Button.Borderless.Colored" />
 
                 <Button
-                    android:text="ssh_test_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ssh_test_button"
-                    android:onClick="sshTest"
+                    android:text="@string/button_close_title"
+                    android:id="@+id/button_close"
+                    android:onClick="buttonOpenClose"
                     android:layout_weight="1"
                     style="@android:style/Widget.Material.Button.Borderless.Colored" />
             </LinearLayout>
@@ -127,20 +127,20 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:text="Open"
+                    android:text="@string/button_open_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ssh_open_button"
-                    android:onClick="sshDoorOpen"
+                    android:id="@+id/button_ssh_open"
+                    android:onClick="sshDoorOpenClose"
                     android:layout_weight="1"
                     style="@android:style/Widget.Material.Button.Borderless.Colored" />
 
                 <Button
-                    android:text="Close"
+                    android:text="@string/button_close_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ssh_close_button"
-                    android:onClick="sshDoorClose"
+                    android:id="@+id/button_ssh_close"
+                    android:onClick="sshDoorOpenClose"
                     android:layout_weight="1"
                     style="@android:style/Widget.Material.Button.Borderless.Colored" />
             </LinearLayout>
