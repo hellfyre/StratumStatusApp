@@ -28,13 +28,15 @@
                 android:padding="12dp" >
 
                 <ImageView
-                    android:src="@drawable/stratum0_logo_geschlossen"
+                    android:src="@drawable/stratum0_logo"
                     android:layout_width="@android:dimen/notification_large_icon_width"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView"
+                    android:id="@+id/image_status"
                     android:scaleType="fitStart"
                     android:cropToPadding="false"
-                    android:adjustViewBounds="true" />
+                    android:adjustViewBounds="true"
+                    android:clickable="true"
+                    android:onClick="buttonUpdateStatus"/>
 
                 <Space
                     android:layout_width="12dp"
