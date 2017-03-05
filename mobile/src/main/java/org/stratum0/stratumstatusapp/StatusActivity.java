@@ -1,9 +1,13 @@
 package org.stratum0.stratumstatusapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,14 +25,24 @@ import static org.stratum0.stratumstatusapp.SpaceStatus.getInstance;
 public class StatusActivity extends Activity implements SpaceStatusUpdateListener, SpaceStatusChangeListener, SSHConnectListener {
 
     SpaceStatus status = getInstance();
+    Button buttonOpen;
+    Button buttonClose;
     TextView textStatus;
+    TextView testSSH;
+    ImageView imageStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
 
+        buttonOpen = (Button) findViewById(R.id.button_open);
+        buttonClose = (Button) findViewById(R.id.button_close);
         textStatus = (TextView) findViewById(R.id.text_status);
+        testSSH = (TextView) findViewById(R.id.text_ssh);
+        imageStatus = (ImageView) findViewById(R.id.image_status);
+
+        updateStatus();
     }
 
     @Override
@@ -51,44 +65,136 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
         }
     }
 
-    public void updateStatus(View view) {
+    private void updateStatus() {
         SpaceStatusUpdateTask updateTask = new SpaceStatusUpdateTask(this);
         updateTask.addListener(this);
         updateTask.execute();
     }
 
-    public void sshTest(View view) {
+    public void changeStatus(SpaceStatus.Status status, String openBy) {
+        if (openBy.isEmpty()) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            openBy = prefs.getString("name", "Player 1");
+        }
 
-        Context ctx = view.getContext();
-        SSHConnectTask t = new SSHConnectTask(ctx);
-        t.execute("test");
+        StringBuilder queryString = new StringBuilder("/update?");
+        if (status == SpaceStatus.Status.OPEN) {
+            queryString.append("open=true&by=");
+            queryString.append(openBy);
+        }
+        else if (status == SpaceStatus.Status.CLOSED) {
+            queryString.append("open=false");
+        }
+
+        SpaceStatusChangeTask changeTask = new SpaceStatusChangeTask(this);
+        changeTask.addListener(this);
+        changeTask.execute(queryString.toString());
     }
 
-    public void sshDoorOpen(View view) {
-        Context context = view.getContext();
-        SSHConnectTask sshConnectTask = new SSHConnectTask(context);
-        sshConnectTask.execute("open");
+    public void buttonUpdateStatus(View view) {
+        updateStatus();
     }
 
-    public void sshDoorClose(View view) {
-        Context context = view.getContext();
-        SSHConnectTask sshConnectTask = new SSHConnectTask(context);
-        sshConnectTask.execute("close");
+    public void buttonOpenClose(View view) {
+        SpaceStatus.Status status = SpaceStatus.Status.UNKNOWN;
+
+        if (view.getId() == R.id.button_open) {
+            status = SpaceStatus.Status.OPEN;
+
+            if (this.status.getStatus() == SpaceStatus.Status.OPEN) {
+                AlertDialog.Builder nameDialogBuilder = new AlertDialog.Builder(this);
+                nameDialogBuilder
+                        .setTitle("Foobar Name")
+                        .setMessage("Gimme name!!")
+                        .setView(R.layout.dialog_status_name)
+                        .setNegativeButton("Bail", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {}
+                        })
+                        .setPositiveButton("Yeah", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AlertDialog d = (AlertDialog) dialog;
+                                EditText textStatusName = (EditText) d.findViewById(R.id.text_status_name);
+                                changeStatus(SpaceStatus.Status.OPEN, textStatusName.getText().toString());
+                            }
+                        });
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                AlertDialog nameDialog = nameDialogBuilder.create();
+                nameDialog.show();
+
+                EditText textStatusName = (EditText) nameDialog.findViewById(R.id.text_status_name);
+                textStatusName.setText(prefs.getString("name", "Player 1"));
+
+                return;
+            }
+        }
+        else if (view.getId() == R.id.button_close) {
+            status = SpaceStatus.Status.CLOSED;
+        }
+
+        changeStatus(status, "");
     }
 
-    @Override
-    public void onPreSpaceStatusUpdate(Context context) {
-        //TODO: do something
+    public void sshDoorOpenClose(View view) {
+        String operation = "open";
+        if (view.getId() == R.id.button_ssh_close) {
+            operation = "close";
+        }
+
+        SSHConnectTask sshConnectTask = new SSHConnectTask(this);
+        sshConnectTask.addListener(this);
+        sshConnectTask.execute(operation);
     }
 
     @Override
     public void onPostSpaceStatusUpdate(Context context) {
-        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-        StringBuilder curStatusBuilder = new StringBuilder();
-        curStatusBuilder.append("Status: ");
+        int buttonOpenStringID = R.string.button_open_title;
         switch (status.getStatus()) {
             case OPEN:
+                imageStatus.setImageResource(R.drawable.stratum0_logo_offen);
+                buttonOpenStringID = R.string.button_openas_title;
+                buttonClose.setEnabled(true);
+                break;
+            case CLOSED:
+                imageStatus.setImageResource(R.drawable.stratum0_logo_geschlossen);
+                buttonClose.setEnabled(false);
+                break;
+            case UNKNOWN:
+                imageStatus.setImageResource(R.drawable.stratum0_logo);
+                buttonClose.setEnabled(true);
+                break;
+        }
+
+        textStatus.setText(buildStatusText(status));
+        buttonOpen.setText(buttonOpenStringID);
+    }
+
+    private String buildStatusText(SpaceStatus status) {
+        StringBuilder curStatusBuilder = new StringBuilder();
+        curStatusBuilder.append("Status: ");
+
+        switch (status.getStatus()) {
+            case OPEN:
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 curStatusBuilder.append("Open");
+                curStatusBuilder.append(System.getProperty("line.separator"));
+
+                curStatusBuilder.append("Opened by: ");
+                curStatusBuilder.append(status.getOpenedBy());
+                curStatusBuilder.append(System.getProperty("line.separator"));
+
+                curStatusBuilder.append("Since: ");
+                curStatusBuilder.append(df.format(status.getSince().getTime()));
+                curStatusBuilder.append(System.getProperty("line.separator"));
+
+                curStatusBuilder.append("Last Update: ");
+                curStatusBuilder.append(df.format(status.getLastUpdate().getTime()));
+                curStatusBuilder.append(System.getProperty("line.separator"));
+
+                curStatusBuilder.append("Last Change: ");
+                curStatusBuilder.append(df.format(status.getLastChange().getTime()));
                 break;
             case CLOSED:
                 curStatusBuilder.append("Closed");
@@ -97,19 +203,9 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
                 curStatusBuilder.append("Unknown");
                 break;
         }
-        curStatusBuilder.append(System.getProperty("line.separator"));
 
-        curStatusBuilder.append("Opened by: ");
-        curStatusBuilder.append(status.getOpenedBy());
-        curStatusBuilder.append(System.getProperty("line.separator"));
-
-        curStatusBuilder.append("Since: ");
-        curStatusBuilder.append(df.format(status.getSince().getTime()));
-        curStatusBuilder.append(System.getProperty("line.separator"));
-
-        curStatusBuilder.append("Last Update: ");
-        curStatusBuilder.append(df.format(status.getLastUpdate().getTime()));
-        curStatusBuilder.append(System.getProperty("line.separator"));
+        return curStatusBuilder.toString();
+    }
 
     @Override
     public void onPostSSHConnect(String result) {
