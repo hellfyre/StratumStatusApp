@@ -96,13 +96,13 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
         return status.getStatus();
     }
 
-    @Override
+    /*@Override
     protected void onPreExecute() {
         super.onPreExecute();
         for (SpaceStatusUpdateListener receiver : receiverList) {
             receiver.onPreSpaceStatusUpdate(context);
         }
-    }
+    }*/
 
     @Override
     protected void onPostExecute(SpaceStatus.Status status) {
