@@ -8,8 +8,10 @@ import java.util.Calendar;
  * Author Matthias Uschok <dev@uschok.de>
  */
 public class SpaceStatus {
-    public enum Status {OPEN, CLOSED, UNKNOWN}
+
+    // Singleton instance
     private static final SpaceStatus instance = new SpaceStatus();
+    public enum Status {OPEN, CLOSED, UNKNOWN}
 
     private Calendar lastUpdate;
 

@@ -6,14 +6,27 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class SettingsActivity extends Activity {
+
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -114,6 +127,61 @@ public class SettingsActivity extends Activity {
             bindPreferenceSummaryToValue(findPreference("ssh_user_open"));
             bindPreferenceSummaryToValue(findPreference("ssh_user_close"));
             bindPreferenceSummaryToValue(findPreference("ssh_which_wlans"));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SSHKey.RequestSSHPrivateKeyFileImport && resultCode != 0) {
+            Uri fileUri = data.getData();
+            File importFile = new File(fileUri.getPath());
+
+            Log.d("SSH", "Trying to open file " + fileUri.getPath());
+
+            try {
+                BufferedReader sshImportFileReader = new BufferedReader(new FileReader(importFile));
+                StringBuilder sshImportedKey = new StringBuilder();
+                String line;
+
+                while((line = sshImportFileReader.readLine()) != null) {
+                    sshImportedKey.append(line).append("\n");
+                }
+                sshImportedKey.deleteCharAt(sshImportedKey.length()-1);
+
+                sshImportFileReader.close();
+
+                Log.d("SSH", "Read file. Contents: " + sshImportedKey.toString());
+
+                SSHKey sshKey = SSHKey.getInstance(this);
+                sshKey.writePrivateKey(sshImportedKey.toString());
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (requestCode == SSHKey.RequestSSHPublicKeyFileExport && requestCode != 0) {
+            Uri fileUri = data.getData();
+            File exportFile = new File(fileUri.getPath());
+
+            Log.d("SSH", "Trying to write to file " + fileUri.getPath());
+
+            try {
+                BufferedWriter sshExportFileWriter = new BufferedWriter(new FileWriter(exportFile));
+
+                SSHKey sshKey = SSHKey.getInstance(this);
+                String publicKey = sshKey.readPublicKey();
+
+                sshExportFileWriter.write(publicKey);
+                sshExportFileWriter.close();
+
+                Toast successToast = Toast.makeText(this, "Exported public key to " + fileUri.getPath(), Toast.LENGTH_LONG);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -106,7 +106,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
                 nameDialogBuilder
                         .setTitle("Foobar Name")
                         .setMessage("Gimme name!!")
-                        .setView(R.layout.dialog_status_name)
+                        .setView(R.layout.dialog_edittext_singleline)
                         .setNegativeButton("Bail", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {}

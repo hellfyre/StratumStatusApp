@@ -8,7 +8,6 @@
         android:id="@+id/text_private_key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/pref_privkey_multiline_hint"
         android:scrollbars="vertical"
         android:inputType="textMultiLine" />
 </LinearLayout>
