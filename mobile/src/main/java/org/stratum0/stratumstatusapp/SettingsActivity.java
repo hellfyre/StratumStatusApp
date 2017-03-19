@@ -1,12 +1,14 @@
 package org.stratum0.stratumstatusapp;
 
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class SettingsActivity extends Activity {
 
@@ -134,6 +138,8 @@ public class SettingsActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (data == null) return;
+
         if (requestCode == SSHKey.RequestSSHPrivateKeyFileImport && resultCode != 0) {
             Uri fileUri = data.getData();
             File importFile = new File(fileUri.getPath());
@@ -182,6 +188,29 @@ public class SettingsActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        HashMap<String,Integer> permissionMap = new HashMap<>();
+        for(int i = 0; i<permissions.length; i++) {
+            permissionMap.put(permissions[i], grantResults[i]);
+        }
+
+        switch (requestCode) {
+            case SSHKey.RequestPermissionRead:
+                if(permissionMap.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    SSHKey sshKey = SSHKey.getInstance(this);
+                    sshKey.importPrivateKeyFromFile();
+                }
+                break;
+            case SSHKey.RequestPermissionWrite:
+                if(permissionMap.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    SSHKey sshKey = SSHKey.getInstance(this);
+                    sshKey.exportPublicKeyToFile();
+                }
+                break;
         }
     }
 

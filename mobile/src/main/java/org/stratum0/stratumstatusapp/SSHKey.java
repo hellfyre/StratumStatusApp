@@ -1,6 +1,11 @@
 package org.stratum0.stratumstatusapp;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.jcraft.jsch.JSch;
@@ -115,5 +120,34 @@ public class SSHKey {
         }
     }
 
+    public void importPrivateKeyFromFile() {
+        Activity activity = (Activity) this.context;
+        if(this.context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            activity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SSHKey.RequestPermissionRead);
+            return;
+        }
+        Intent fileIntent = new Intent();
+        fileIntent.setType("*/*");
+        fileIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        Log.d("FILE", "activity is " + activity.getClass().toString());
+
+        activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPrivateKeyFileImport);
+    }
+
+    public void exportPublicKeyToFile() {
+        Activity activity = (Activity) this.context;
+        if(this.context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, SSHKey.RequestPermissionWrite);
+            return;
+        }
+        Intent fileIntent = new Intent();
+        fileIntent.setType("*/*");
+        fileIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        Log.d("FILE", "activity is " + activity.getClass().toString());
+
+        activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPublicKeyFileExport);
+    }
 
 }

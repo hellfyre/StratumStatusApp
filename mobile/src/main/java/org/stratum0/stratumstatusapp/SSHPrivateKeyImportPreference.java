@@ -23,18 +23,10 @@ public class SSHPrivateKeyImportPreference extends Preference {
     protected void onClick() {
         super.onClick();
 
-        Activity activity = (Activity) this.getContext();
-        if(this.getContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            activity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SSHKey.RequestPermissionRead);
-            return;
-        }
-        Intent fileIntent = new Intent();
-        fileIntent.setType("*/*");
-        fileIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-        Log.d("FILE", "activity is " + activity.getClass().toString());
-
-        activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPrivateKeyFileImport);
+        SSHKey sshKey = SSHKey.getInstance(this.getContext());
+        sshKey.importPrivateKeyFromFile();
     }
+
+
 
 }

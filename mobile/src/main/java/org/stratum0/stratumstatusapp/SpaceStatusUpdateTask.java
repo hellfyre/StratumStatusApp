@@ -46,6 +46,8 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
         try {
             statusUrl = new URL(prefs.getString("api_url", "http://status.stratum0.org") + "/status.json");
             HttpURLConnection connection = (HttpURLConnection) statusUrl.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             if(connection.getResponseCode() == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String line;
