@@ -33,13 +33,6 @@
             <org.stratum0.stratumstatusapp.SSHPrivateKeyGeneratePreference
                 android:title="Generate private key"/>
         </PreferenceScreen>
-        <!-- <Preference
-            android:title="legacy">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:targetPackage="org.stratum0.stratumstatusapp"
-                android:targetClass="org.stratum0.stratumstatusapp.SSHPrivateKeyDialog" />
-        </Preference> -->
         <EditTextPreference
             android:key="ssh_user_open"
             android:title="@string/pref_ssh_user_open_title"
