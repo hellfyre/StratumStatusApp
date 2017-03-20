@@ -138,56 +138,72 @@ public class SettingsActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data == null) return;
+        if (data == null || resultCode == 0) return;
 
-        if (requestCode == SSHKey.RequestSSHPrivateKeyFileImport && resultCode != 0) {
-            Uri fileUri = data.getData();
-            File importFile = new File(fileUri.getPath());
+        Uri fileUri = data.getData();
+        File importExportFile = new File(fileUri.getPath());
 
-            Log.d("SSH", "Trying to open file " + fileUri.getPath());
+        switch (requestCode) {
+            case SSHKey.RequestSSHPrivateKeyFileImport:
+                Log.d("SSH", "Trying to open file " + fileUri.getPath());
 
-            try {
-                BufferedReader sshImportFileReader = new BufferedReader(new FileReader(importFile));
-                StringBuilder sshImportedKey = new StringBuilder();
-                String line;
+                try {
+                    BufferedReader sshImportFileReader = new BufferedReader(new FileReader(importExportFile));
+                    StringBuilder sshImportedKey = new StringBuilder();
+                    String line;
 
-                while((line = sshImportFileReader.readLine()) != null) {
-                    sshImportedKey.append(line).append("\n");
+                    while ((line = sshImportFileReader.readLine()) != null) {
+                        sshImportedKey.append(line).append("\n");
+                    }
+                    sshImportedKey.deleteCharAt(sshImportedKey.length() - 1);
+
+                    sshImportFileReader.close();
+
+                    Log.d("SSH", "Read file. Contents: " + sshImportedKey.toString());
+
+                    SSHKey sshKey = SSHKey.getInstance(this);
+                    sshKey.setPrivateKey(sshImportedKey.toString());
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                sshImportedKey.deleteCharAt(sshImportedKey.length()-1);
+                break;
+            case SSHKey.RequestSSHPublicKeyFileExport:
+                Log.d("SSH", "Trying to write public key to file " + fileUri.getPath());
 
-                sshImportFileReader.close();
+                try {
+                    BufferedWriter sshExportFileWriter = new BufferedWriter(new FileWriter(importExportFile));
 
-                Log.d("SSH", "Read file. Contents: " + sshImportedKey.toString());
+                    SSHKey sshKey = SSHKey.getInstance(this);
+                    String publicKey = sshKey.getPublicKey();
 
-                SSHKey sshKey = SSHKey.getInstance(this);
-                sshKey.setPrivateKey(sshImportedKey.toString());
+                    sshExportFileWriter.write(publicKey);
+                    sshExportFileWriter.close();
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (requestCode == SSHKey.RequestSSHPublicKeyFileExport && requestCode != 0) {
-            Uri fileUri = data.getData();
-            File exportFile = new File(fileUri.getPath());
+                    Toast.makeText(this, "Exported public key to " + fileUri.getPath(), Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case SSHKey.RequestSSHPrivateKeyFileExport:
+                Log.d("SSH", "Trying to write private key to file " + fileUri.getPath());
 
-            Log.d("SSH", "Trying to write to file " + fileUri.getPath());
+                try {
+                    BufferedWriter sshExportFileWriter = new BufferedWriter(new FileWriter(importExportFile));
 
-            try {
-                BufferedWriter sshExportFileWriter = new BufferedWriter(new FileWriter(exportFile));
+                    SSHKey sshKey = SSHKey.getInstance(this);
+                    String privateKey = sshKey.getPrivateKey();
 
-                SSHKey sshKey = SSHKey.getInstance(this);
-                String publicKey = sshKey.getPublicKey();
+                    sshExportFileWriter.write(privateKey);
+                    sshExportFileWriter.close();
 
-                sshExportFileWriter.write(publicKey);
-                sshExportFileWriter.close();
-
-                Toast successToast = Toast.makeText(this, "Exported public key to " + fileUri.getPath(), Toast.LENGTH_LONG);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    Toast.makeText(this, "Exported private key to " + fileUri.getPath(), Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 

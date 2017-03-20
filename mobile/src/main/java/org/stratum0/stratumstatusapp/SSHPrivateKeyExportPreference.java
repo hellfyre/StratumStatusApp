@@ -8,9 +8,9 @@ import android.util.AttributeSet;
  * Created by matthias on 05.03.17.
  */
 
-public class SSHKeyExportPreference extends Preference {
+public class SSHPrivateKeyExportPreference extends Preference {
 
-    public SSHKeyExportPreference(Context context, AttributeSet attrs) {
+    public SSHPrivateKeyExportPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -19,7 +19,7 @@ public class SSHKeyExportPreference extends Preference {
         super.onClick();
 
         SSHKey sshKey = SSHKey.getInstance(this.getContext());
-        sshKey.exportPublicKeyToFile();
+        sshKey.exportPrivateKeyToFile();
     }
 
 }

@@ -26,8 +26,10 @@
             android:title="@string/pref_ssh_key_title">
             <org.stratum0.stratumstatusapp.SSHPrivateKeyEditPreference
                 android:title="@string/pref_ssh_key_title"/>
-            <org.stratum0.stratumstatusapp.SSHKeyExportPreference
-                android:title="Export public/private keys"/>
+            <org.stratum0.stratumstatusapp.SSHPublicKeyExportPreference
+                android:title="Export public key"/>
+            <org.stratum0.stratumstatusapp.SSHPrivateKeyExportPreference
+                android:title="Export private key"/>
             <org.stratum0.stratumstatusapp.SSHPrivateKeyImportPreference
                 android:title="Import private key"/>
             <org.stratum0.stratumstatusapp.SSHPrivateKeyGeneratePreference

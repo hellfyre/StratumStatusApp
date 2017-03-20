@@ -26,9 +26,10 @@ public class SSHKey {
     private static final SSHKey instance = new SSHKey();
 
     public static final int RequestSSHPrivateKeyFileImport = 1;
-    public static final int RequestSSHPublicKeyFileExport = 2;
-    public static final int RequestPermissionWrite = 3;
-    public static final int RequestPermissionRead = 4;
+    public static final int RequestSSHPrivateKeyFileExport = 2;
+    public static final int RequestSSHPublicKeyFileExport = 3;
+    public static final int RequestPermissionWrite = 4;
+    public static final int RequestPermissionRead = 5;
 
     Context context;
     File sshPrivateKeyFile;
@@ -111,6 +112,21 @@ public class SSHKey {
         Log.d("FILE", "activity is " + activity.getClass().toString());
 
         activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPrivateKeyFileImport);
+    }
+
+    public void exportPrivateKeyToFile() {
+        Activity activity = (Activity) this.context;
+        if(this.context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, SSHKey.RequestPermissionWrite);
+            return;
+        }
+        Intent fileIntent = new Intent();
+        fileIntent.setType("*/*");
+        fileIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        Log.d("FILE", "activity is " + activity.getClass().toString());
+
+        activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPrivateKeyFileExport);
     }
 
     public void exportPublicKeyToFile() {
