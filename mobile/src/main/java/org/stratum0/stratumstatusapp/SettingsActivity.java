@@ -161,7 +161,7 @@ public class SettingsActivity extends Activity {
                 Log.d("SSH", "Read file. Contents: " + sshImportedKey.toString());
 
                 SSHKey sshKey = SSHKey.getInstance(this);
-                sshKey.writePrivateKey(sshImportedKey.toString());
+                sshKey.setPrivateKey(sshImportedKey.toString());
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -179,7 +179,7 @@ public class SettingsActivity extends Activity {
                 BufferedWriter sshExportFileWriter = new BufferedWriter(new FileWriter(exportFile));
 
                 SSHKey sshKey = SSHKey.getInstance(this);
-                String publicKey = sshKey.readPublicKey();
+                String publicKey = sshKey.getPublicKey();
 
                 sshExportFileWriter.write(publicKey);
                 sshExportFileWriter.close();

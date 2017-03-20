@@ -4,21 +4,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.KeyPair;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * Created by matthias on 05.03.17.
@@ -36,10 +32,12 @@ public class SSHKey {
 
     Context context;
     File sshPrivateKeyFile;
+    SharedPreferences preferences;
 
     private SSHKey() {
         this.context = null;
         this.sshPrivateKeyFile = null;
+        this.preferences = null;
     }
 
     public static SSHKey getInstance(Context context) {
@@ -49,75 +47,55 @@ public class SSHKey {
             instance.sshPrivateKeyFile = new File(instance.context.getFilesDir(), "ssh_priv_key");
         }
 
+        if (instance.preferences == null) {
+            instance.preferences = PreferenceManager.getDefaultSharedPreferences(instance.context);
+        }
+
         return instance;
     }
 
-    public String readPrivateKey() {
-        StringBuilder sshKey = new StringBuilder();
-
-        try {
-            BufferedReader sshFileReader = new BufferedReader(new FileReader(this.sshPrivateKeyFile));
-            String line;
-
-            while((line = sshFileReader.readLine()) != null) {
-                sshKey.append(line).append("\n");
-            }
-            if(sshKey.length() > 1) {
-                sshKey.deleteCharAt(sshKey.length() - 1);
-            }
-
-            sshFileReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sshKey.toString();
+    public String getPrivateKey() {
+        return this.preferences.getString("ssh_private_key", "");
     }
 
-    public String readPublicKey() {
+    public String getPublicKey() {
         JSch jsch = new JSch();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] privateKey = preferences.getString("ssh_private_key", "").getBytes();
+        String username = preferences.getString("name", "Player 1").replaceAll("\\s", "");
 
         try {
-            KeyPair keyPair = KeyPair.load(jsch, sshPrivateKeyFile.getAbsolutePath());
-            keyPair.writePublicKey(baos, "blubb");
+            KeyPair keyPair = KeyPair.load(jsch, privateKey, null);
+            keyPair.writePublicKey(outputStream, username + "@blubb");
         } catch (JSchException e) {
             e.printStackTrace();
         }
 
-        return baos.toString();
+        return outputStream.toString();
     }
 
-    public void writePrivateKey(String privateKey) {
-        if (!this.sshPrivateKeyFile.exists()) {
-            try {
-                this.sshPrivateKeyFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(this.context, "Error saving private key...", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-
-        try {
-            FileOutputStream sshFileOutputStream = new FileOutputStream(this.sshPrivateKeyFile);
-            sshFileOutputStream.write(privateKey.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void setPrivateKey(String privateKey) {
+        Log.d("SSHKey", "setPrivateKey " + privateKey);
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.putString("ssh_private_key", privateKey);
+        editor.commit();
     }
 
     public void generatePrivateKey() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         JSch jsch = new JSch();
+
         try {
             KeyPair keyPair = KeyPair.genKeyPair(jsch, KeyPair.RSA);
-            keyPair.writePrivateKey(this.sshPrivateKeyFile.getPath());
+            keyPair.writePrivateKey(outputStream);
 
-        } catch (JSchException | IOException e) {
+        } catch (JSchException e) {
             e.printStackTrace();
         }
+
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.putString("ssh_private_key", outputStream.toString());
+        editor.commit();
     }
 
     public void importPrivateKeyFromFile() {

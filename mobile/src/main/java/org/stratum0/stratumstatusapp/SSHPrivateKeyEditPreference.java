@@ -34,7 +34,7 @@ public class SSHPrivateKeyEditPreference extends DialogPreference {
     }
 
     private void updatePrivateKeyEdit() {
-        textPrivateKey.setText(sshkey.readPrivateKey());
+        textPrivateKey.setText(sshkey.getPrivateKey());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SSHPrivateKeyEditPreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            sshkey.writePrivateKey(textPrivateKey.getText().toString());
+            sshkey.setPrivateKey(textPrivateKey.getText().toString());
         }
     }
 }
