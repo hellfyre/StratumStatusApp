@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Author Matthias Uschok <dev@uschok.de>
  */
 
-public class SSHConnectTask extends AsyncTask <String, Void, String> {
+public class SSHConnectTask extends AsyncTask <String, String, String> {
 
     private ArrayList<SSHConnectListener> receiverList = new ArrayList<>();
     private Context context;
@@ -32,9 +32,16 @@ public class SSHConnectTask extends AsyncTask <String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
 
+        String operation = new String("close");
+        if (strings.length > 0 && !strings[0].isEmpty()) {
+            operation = strings[0].toLowerCase();
+        }
+
+        publishProgress(operation);
+
         File sshFile = new File(this.context.getFilesDir(), "ssh_priv_key");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
-        String user = prefs.getString("ssh_user_" + strings[0].toLowerCase(), "zu");
+        String user = prefs.getString("ssh_user_" + operation, "zu");
         String server = prefs.getString("ssh_server", "localhost");
 
         JSch jsch = new JSch();
@@ -83,6 +90,19 @@ public class SSHConnectTask extends AsyncTask <String, Void, String> {
         Log.d("SSH", "Connect successful");
 
         return baos.toString();
+    }
+
+    @Override
+    protected void onProgressUpdate(String... values) {
+        super.onProgressUpdate(values);
+
+        String operation = new String("close");
+        if (values.length > 0 && !values[0].isEmpty()) {
+            operation = values[0].toLowerCase();
+        }
+        for (SSHConnectListener receiver : receiverList) {
+            receiver.onPreSSHConnect(operation);
+        }
     }
 
     @Override

@@ -7,6 +7,6 @@ import android.content.Context;
  * Author Matthias Uschok <dev@uschok.de>
  */
 public interface SpaceStatusUpdateListener {
-    //void onPreSpaceStatusUpdate(Context context);
+    void onPreSpaceStatusUpdate(Context context);
     void onPostSpaceStatusUpdate(Context context);
 }

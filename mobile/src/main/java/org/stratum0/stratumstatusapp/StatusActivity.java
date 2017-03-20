@@ -149,6 +149,11 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
     }
 
     @Override
+    public void onPreSpaceStatusUpdate(Context context) {
+        textStatus.setText("Updating...");
+    }
+
+    @Override
     public void onPostSpaceStatusUpdate(Context context) {
         int buttonOpenStringID = R.string.button_open_title;
         switch (status.getStatus()) {
@@ -205,6 +210,18 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
         }
 
         return curStatusBuilder.toString();
+    }
+
+    @Override
+    public void onPreSSHConnect(String operation) {
+        switch (operation) {
+            case "open":
+                testSSH.setText("Opening door...");
+                break;
+            case "close":
+                testSSH.setText("Closing door...");
+                break;
+        }
     }
 
     @Override

@@ -7,6 +7,6 @@ import android.content.Context;
  * Author Matthias Uschok <dev@uschok.de>
  */
 public interface SSHConnectListener {
-//    void onPreSpaceStatusUpdate(Context context);
+    void onPreSSHConnect(String operation);
     void onPostSSHConnect(String result);
 }
