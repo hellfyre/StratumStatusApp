@@ -45,14 +45,14 @@
             android:title="@string/pref_ssh_user_close_title"
             android:defaultValue="zu"
             android:inputType="textNoSuggestions" />
-        <CheckBoxPreference
+        <!-- <CheckBoxPreference
             android:key="ssh_ensure_wlan"
             android:title="@string/pref_ssh_ensure_wlan_title"
             android:defaultValue="" />
         <EditTextPreference
             android:key="ssh_which_wlans"
             android:title="@string/pref_ssh_which_wlans_title"
-            android:defaultValue="Stratum0,Stratum0_5g" />
+            android:defaultValue="Stratum0,Stratum0_5g" /> -->
     </PreferenceCategory>
 
 </PreferenceScreen>
