@@ -2,6 +2,8 @@ package org.stratum0.stratumstatusapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -174,6 +176,15 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
 
         textStatus.setText(buildStatusText(status));
         buttonOpen.setText(buttonOpenStringID);
+
+        // Update widget
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName("org.stratum0.stratumstatusapp", "org.stratum0.stratumstatusapp.StatusWidget"));
+
+        Intent widgetUpdateIntent = new Intent(context, StatusWidget.class);
+        widgetUpdateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        widgetUpdateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        sendBroadcast(widgetUpdateIntent);
     }
 
     private String buildStatusText(SpaceStatus status) {
