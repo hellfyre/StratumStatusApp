@@ -76,7 +76,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
     public void changeStatus(SpaceStatus.Status status, String openBy) {
         if (openBy.isEmpty()) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            openBy = prefs.getString("name", "Player 1");
+            openBy = prefs.getString("name", getString(R.string.pref_name_default));
         }
 
         StringBuilder queryString = new StringBuilder("/update?");
@@ -106,14 +106,14 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
             if (this.status.getStatus() == SpaceStatus.Status.OPEN) {
                 AlertDialog.Builder nameDialogBuilder = new AlertDialog.Builder(this);
                 nameDialogBuilder
-                        .setTitle("Foobar Name")
-                        .setMessage("Gimme name!!")
+                        .setTitle(getString(R.string.button_openas_title))
+//                        .setMessage("Gimme name!!")
                         .setView(R.layout.dialog_edittext_singleline)
-                        .setNegativeButton("Bail", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {}
                         })
-                        .setPositiveButton("Yeah", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 AlertDialog d = (AlertDialog) dialog;
@@ -127,7 +127,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
                 nameDialog.show();
 
                 EditText textStatusName = (EditText) nameDialog.findViewById(R.id.text_status_name);
-                textStatusName.setText(prefs.getString("name", "Player 1"));
+                textStatusName.setText(prefs.getString("name", getString(R.string.pref_name_default)));
 
                 return;
             }
@@ -152,7 +152,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
 
     @Override
     public void onPreSpaceStatusUpdate(Context context) {
-        textStatus.setText("Updating...");
+        textStatus.setText(getString(R.string.text_updating ));
     }
 
     @Override

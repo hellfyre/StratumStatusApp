@@ -22,12 +22,21 @@
     <string name="pref_ssh_ensure_wlan_title">Only execute in certain wifis</string>
     <string name="pref_ssh_which_wlans_title">Certain wifis</string>
 
-    <!-- SSH private key dialog -->
+    <!-- SSH private key menu -->
     <string name="pref_privkey_multiline_hint">Paste private key here…</string>
-    <string name="pref_privkey_importfromfile_text">Import from file…</string>
-    <string name="pref_privkey_exporttofile_text">Export to file…</string>
-    <string name="pref_privkey_generate_text">Generate private key</string>
+    <string name="pref_privkey_button_importfromfile_text">Import from file…</string>
+    <string name="pref_privkey_button_exporttofile_text">Export to file…</string>
+    <string name="pref_privkey_button_generate_text">Generate private key</string>
+
+    <!-- StatusActivity -->
+
     <string name="button_open_title">Open</string>
     <string name="button_openas_title">Open as …</string>
     <string name="button_close_title">Close</string>
+
+    <!-- Global -->
+
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="text_updating">Updating …</string>
 </resources>
