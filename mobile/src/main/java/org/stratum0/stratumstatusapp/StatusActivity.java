@@ -184,6 +184,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
         Intent widgetUpdateIntent = new Intent(context, StatusWidget.class);
         widgetUpdateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         widgetUpdateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        widgetUpdateIntent.putExtra("source", "postSpaceStatusUpdate");
         sendBroadcast(widgetUpdateIntent);
     }
 
