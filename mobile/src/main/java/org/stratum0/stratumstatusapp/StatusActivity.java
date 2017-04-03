@@ -29,8 +29,12 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
     SpaceStatus status = getInstance();
     Button buttonOpen;
     Button buttonClose;
-    TextView textStatus;
     TextView testSSH;
+    TextView textStatus;
+    TextView textOpenedBy;
+    TextView textSince;
+    TextView textLastUpdate;
+    TextView textLastChange;
     ImageView imageStatus;
 
     @Override
@@ -40,8 +44,12 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
 
         buttonOpen = (Button) findViewById(R.id.button_open);
         buttonClose = (Button) findViewById(R.id.button_close);
-        textStatus = (TextView) findViewById(R.id.text_status);
         testSSH = (TextView) findViewById(R.id.text_ssh);
+        textStatus = (TextView) findViewById(R.id.text_status_value);
+        textOpenedBy = (TextView) findViewById(R.id.text_openedby_value);
+        textSince = (TextView) findViewById(R.id.text_since_value);
+        textLastUpdate = (TextView) findViewById(R.id.text_lastupdate_value);
+        textLastChange = (TextView) findViewById(R.id.text_lastchange_value);
         imageStatus = (ImageView) findViewById(R.id.image_status);
 
         updateStatus();
@@ -152,29 +160,41 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
 
     @Override
     public void onPreSpaceStatusUpdate(Context context) {
-        textStatus.setText(getString(R.string.text_updating ));
+        textStatus.setText(getString(R.string.text_updating));
+        textOpenedBy.setText("");
+        textSince.setText("");
+        textLastUpdate.setText("");
+        textLastChange.setText("");
     }
 
     @Override
     public void onPostSpaceStatusUpdate(Context context) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         int buttonOpenStringID = R.string.button_open_title;
+
         switch (status.getStatus()) {
             case OPEN:
+                textStatus.setText(getString(R.string.status_open));
                 imageStatus.setImageResource(R.drawable.stratum0_logo_offen);
                 buttonOpenStringID = R.string.button_openas_title;
                 buttonClose.setEnabled(true);
                 break;
             case CLOSED:
+                textStatus.setText(getString(R.string.status_open));
                 imageStatus.setImageResource(R.drawable.stratum0_logo_geschlossen);
                 buttonClose.setEnabled(false);
                 break;
             case UNKNOWN:
+                textStatus.setText(getString(R.string.status_open));
                 imageStatus.setImageResource(R.drawable.stratum0_logo);
                 buttonClose.setEnabled(true);
                 break;
         }
 
-        textStatus.setText(buildStatusText(status));
+        textOpenedBy.setText(status.getOpenedBy());
+        textSince.setText(df.format(status.getSince().getTime()));
+        textLastUpdate.setText(df.format(status.getLastUpdate().getTime()));
+        textLastChange.setText(df.format(status.getLastChange().getTime()));
         buttonOpen.setText(buttonOpenStringID);
 
         // Update widget
@@ -186,42 +206,6 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
         widgetUpdateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         widgetUpdateIntent.putExtra("source", "postSpaceStatusUpdate");
         sendBroadcast(widgetUpdateIntent);
-    }
-
-    private String buildStatusText(SpaceStatus status) {
-        StringBuilder curStatusBuilder = new StringBuilder();
-        curStatusBuilder.append("Status: ");
-
-        switch (status.getStatus()) {
-            case OPEN:
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                curStatusBuilder.append("Open");
-                curStatusBuilder.append(System.getProperty("line.separator"));
-
-                curStatusBuilder.append("Opened by: ");
-                curStatusBuilder.append(status.getOpenedBy());
-                curStatusBuilder.append(System.getProperty("line.separator"));
-
-                curStatusBuilder.append("Since: ");
-                curStatusBuilder.append(df.format(status.getSince().getTime()));
-                curStatusBuilder.append(System.getProperty("line.separator"));
-
-                curStatusBuilder.append("Last Update: ");
-                curStatusBuilder.append(df.format(status.getLastUpdate().getTime()));
-                curStatusBuilder.append(System.getProperty("line.separator"));
-
-                curStatusBuilder.append("Last Change: ");
-                curStatusBuilder.append(df.format(status.getLastChange().getTime()));
-                break;
-            case CLOSED:
-                curStatusBuilder.append("Closed");
-                break;
-            case UNKNOWN:
-                curStatusBuilder.append("Unknown");
-                break;
-        }
-
-        return curStatusBuilder.toString();
     }
 
     @Override

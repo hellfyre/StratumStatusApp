@@ -33,10 +33,19 @@
     <string name="button_open_title">Open</string>
     <string name="button_openas_title">Open as …</string>
     <string name="button_close_title">Close</string>
+    <string name="text_status_label">Status:</string>
+    <string name="text_openedby_label">Opened by:</string>
+    <string name="text_since_label">Since:</string>
+    <string name="text_lastupdate_label">Last update:</string>
+    <string name="text_lastchange_label">Last status change:</string>
 
     <!-- Global -->
 
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_ok">OK</string>
     <string name="text_updating">Updating …</string>
+
+    <string name="status_open">Open</string>
+    <string name="status_closed">CLosed</string>
+    <string name="status_unknown">Unknown</string>
 </resources>

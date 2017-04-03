@@ -18,7 +18,7 @@ public class StatusWidget extends AppWidgetProvider implements SpaceStatusUpdate
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Integer statusLogoResourceID) {
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.status_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_status);
         views.setImageViewResource(R.id.statuswidget_image, statusLogoResourceID);
 
         // Create (onClick)PendingIntent to handle widget clicks
