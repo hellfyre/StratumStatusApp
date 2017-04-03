@@ -39,6 +39,8 @@
     <string name="text_lastupdate_label">Last update:</string>
     <string name="text_lastchange_label">Last status change:</string>
 
+    <string name="ssh_door_idle_text">This controls the upper door</string>
+
     <!-- Global -->
 
     <string name="dialog_button_cancel">Cancel</string>

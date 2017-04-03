@@ -17,12 +17,12 @@ import java.util.ArrayList;
 /**
  * Created by Matthias Uschok <dev@uschok.de> on 2013-10-06.
  */
-public class SpaceStatusChangeTask extends AsyncTask <String, Void, Integer> {
+class SpaceStatusChangeTask extends AsyncTask <String, Void, Integer> {
 
-    private ArrayList<SpaceStatusChangeListener> receiverList = new ArrayList<SpaceStatusChangeListener>();
+    private ArrayList<SpaceStatusChangeListener> receiverList = new ArrayList<>();
     private Context context;
 
-    public SpaceStatusChangeTask(Context context) {
+    SpaceStatusChangeTask(Context context) {
         this.context = context;
     }
 
@@ -43,12 +43,6 @@ public class SpaceStatusChangeTask extends AsyncTask <String, Void, Integer> {
             Log.e(this.getClass().getName(), "Update request: could not connect to server.", e);
         }
 
-        //TODO: Update the widget
-        /*Intent updateIntent = new Intent(context, StratumsphereStatusProvider.class);
-        updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        context.sendBroadcast(updateIntent);*/
-
         return statusCode;
     }
 
@@ -68,7 +62,7 @@ public class SpaceStatusChangeTask extends AsyncTask <String, Void, Integer> {
         }
     }
 
-    public void addListener(SpaceStatusChangeListener receiver) {
+    void addListener(SpaceStatusChangeListener receiver) {
         receiverList.add(receiver);
     }
 
