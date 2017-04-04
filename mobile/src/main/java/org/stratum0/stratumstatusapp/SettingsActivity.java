@@ -130,7 +130,7 @@ public class SettingsActivity extends Activity {
             bindPreferenceSummaryToValue(findPreference("ssh_server"));
             bindPreferenceSummaryToValue(findPreference("ssh_user_open"));
             bindPreferenceSummaryToValue(findPreference("ssh_user_close"));
-            bindPreferenceSummaryToValue(findPreference("ssh_which_wlans"));
+//            bindPreferenceSummaryToValue(findPreference("ssh_which_wlans"));
         }
     }
 
