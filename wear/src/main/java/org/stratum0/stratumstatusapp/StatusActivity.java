@@ -16,8 +16,8 @@ public class StatusActivity extends WearableActivity {
             new SimpleDateFormat("HH:mm", Locale.US);
 
     private BoxInsetLayout mContainerView;
-    private TextView mTextView;
-    private TextView mClockView;
+//    private TextView mTextView;
+//    private TextView mClockView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class StatusActivity extends WearableActivity {
         setAmbientEnabled();
 
         mContainerView = (BoxInsetLayout) findViewById(R.id.container);
-        mTextView = (TextView) findViewById(R.id.text);
-        mClockView = (TextView) findViewById(R.id.clock);
+//        mTextView = (TextView) findViewById(R.id.text);
+//        mClockView = (TextView) findViewById(R.id.clock);
     }
 
     @Override
@@ -51,14 +51,14 @@ public class StatusActivity extends WearableActivity {
     private void updateDisplay() {
         if (isAmbient()) {
             mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
-            mTextView.setTextColor(getResources().getColor(android.R.color.white));
-            mClockView.setVisibility(View.VISIBLE);
+//            mTextView.setTextColor(getResources().getColor(android.R.color.white));
+//            mClockView.setVisibility(View.VISIBLE);
 
-            mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
+//            mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
         } else {
             mContainerView.setBackground(null);
-            mTextView.setTextColor(getResources().getColor(android.R.color.black));
-            mClockView.setVisibility(View.GONE);
+//            mTextView.setTextColor(getResources().getColor(android.R.color.black));
+//            mClockView.setVisibility(View.GONE);
         }
     }
 }

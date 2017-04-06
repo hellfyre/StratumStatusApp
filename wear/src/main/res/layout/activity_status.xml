@@ -8,6 +8,13 @@
     tools:context="org.stratum0.stratumstatusapp.StatusActivity"
     tools:deviceIds="wear">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/stratum0_logo" />
+
+    <!--
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
@@ -22,5 +29,6 @@
         android:layout_gravity="bottom|start"
         android:textColor="@android:color/white"
         app:layout_box="all" />
+    -->
 
 </android.support.wearable.view.BoxInsetLayout>
