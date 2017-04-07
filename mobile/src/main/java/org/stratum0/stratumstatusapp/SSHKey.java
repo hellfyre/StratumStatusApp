@@ -13,8 +13,10 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.KeyPair;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStreamReader;
 
 /**
  * Created by matthias on 05.03.17.
@@ -32,21 +34,15 @@ public class SSHKey {
     public static final int RequestPermissionRead = 5;
 
     Context context;
-    File sshPrivateKeyFile;
     SharedPreferences preferences;
 
     private SSHKey() {
         this.context = null;
-        this.sshPrivateKeyFile = null;
         this.preferences = null;
     }
 
     public static SSHKey getInstance(Context context) {
         instance.context = context;
-
-        if (instance.sshPrivateKeyFile == null) {
-            instance.sshPrivateKeyFile = new File(instance.context.getFilesDir(), "ssh_priv_key");
-        }
 
         if (instance.preferences == null) {
             instance.preferences = PreferenceManager.getDefaultSharedPreferences(instance.context);
@@ -65,9 +61,19 @@ public class SSHKey {
         byte[] privateKey = preferences.getString("ssh_private_key", "").getBytes();
         String username = preferences.getString("name", "Player 1").replaceAll("\\s", "");
 
+        String hostname = "";
+        try {
+            Process getprop = Runtime.getRuntime().exec("getprop net.hostname");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getprop.getInputStream()));
+            hostname = bufferedReader.readLine();
+            getprop.destroy();
+        } catch (java.io.IOException e) {
+            Log.e("SSHKey", String.format("Error getting hostname: %s", e.toString()));
+        }
+
         try {
             KeyPair keyPair = KeyPair.load(jsch, privateKey, null);
-            keyPair.writePublicKey(outputStream, username + "@blubb");
+            keyPair.writePublicKey(outputStream, String.format("%s@%s", username, hostname));
         } catch (JSchException e) {
             e.printStackTrace();
         }

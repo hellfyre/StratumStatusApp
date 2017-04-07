@@ -12,7 +12,6 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -39,10 +38,10 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
 
         publishProgress(operation);
 
-        File sshFile = new File(this.context.getFilesDir(), "ssh_priv_key");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
         String user = prefs.getString("ssh_user_" + operation, "zu");
         String server = prefs.getString("ssh_server", "localhost");
+        String privateKey = prefs.getString("ssh_private_key", "");
 
         JSch jsch = new JSch();
         Session sshSession = null;
@@ -55,7 +54,7 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
         }
 
         try {
-            jsch.addIdentity(sshFile.getPath());
+            jsch.addIdentity("id_rsa", privateKey.getBytes(), null, null);
         } catch (JSchException e) {
             e.printStackTrace();
         }
