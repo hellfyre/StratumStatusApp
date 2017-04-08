@@ -18,11 +18,11 @@ public class SSHPrivateKeyEditPreference extends DialogPreference {
     public SSHPrivateKeyEditPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        sshkey = SSHKey.getInstance(this.getContext());
+        sshkey = SSHKey.getInstance(context);
 
         setDialogLayoutResource(R.layout.dialog_edittext_multiline);
-        setNegativeButtonText("Nope");
-        setPositiveButtonText("Yup");
+        setNegativeButtonText(context.getString(R.string.dialog_button_cancel));
+        setPositiveButtonText(context.getString(R.string.dialog_button_save));
     }
 
     @Override

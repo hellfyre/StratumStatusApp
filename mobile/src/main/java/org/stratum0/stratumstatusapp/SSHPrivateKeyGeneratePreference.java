@@ -11,9 +11,9 @@ import android.util.AttributeSet;
 public class SSHPrivateKeyGeneratePreference extends DialogPreference {
     public SSHPrivateKeyGeneratePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setDialogMessage("Really generate?!?");
-        setPositiveButtonText("Yup");
-        setNegativeButtonText("Nope");
+        setDialogMessage(context.getString(R.string.text_confirm_generate_key));
+        setPositiveButtonText(context.getString(R.string.dialog_button_ok));
+        setNegativeButtonText(context.getString(R.string.dialog_button_cancel));
     }
 
     @Override

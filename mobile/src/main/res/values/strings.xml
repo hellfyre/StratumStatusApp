@@ -45,7 +45,9 @@
 
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_save">Save</string>
     <string name="text_updating">Updating …</string>
+    <string name="text_confirm_generate_key">Are you sure you want to generate a new key?</string>
 
     <string name="status_open">Open</string>
     <string name="status_closed">CLosed</string>
