@@ -50,6 +50,6 @@
     <string name="text_confirm_generate_key">Are you sure you want to generate a new key?</string>
 
     <string name="status_open">Open</string>
-    <string name="status_closed">CLosed</string>
+    <string name="status_closed">Closed</string>
     <string name="status_unknown">Unknown</string>
 </resources>
