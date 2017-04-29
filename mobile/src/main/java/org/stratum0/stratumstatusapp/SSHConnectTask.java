@@ -59,7 +59,7 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
             e.printStackTrace();
         }
 
-        Log.d("SSH", "Trying to connect...");
+        Log.d(this.getClass().getName(), "Trying to connect...");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write("Output: ".getBytes(), 0, 8);
@@ -78,15 +78,15 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
                 //wait
             }
 
-            Log.d("SSH", baos.toString());
+            Log.d(this.getClass().getName(), baos.toString());
 
         } catch (JSchException e) {
-            Log.d("SSH", "Connect NOT successful");
+            Log.d(this.getClass().getName(), "Connect NOT successful");
             e.printStackTrace();
             return "Could not connect";
         }
 
-        Log.d("SSH", "Connect successful");
+        Log.d(this.getClass().getName(), "Connect successful");
 
         return baos.toString();
     }

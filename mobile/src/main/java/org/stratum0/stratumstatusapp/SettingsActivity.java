@@ -145,7 +145,7 @@ public class SettingsActivity extends Activity {
 
         switch (requestCode) {
             case SSHKey.RequestSSHPrivateKeyFileImport:
-                Log.d("SSH", "Trying to open file " + fileUri.getPath());
+                Log.d(this.getClass().getName(), String.format("Trying to open file %s", fileUri.getPath()));
 
                 try {
                     BufferedReader sshImportFileReader = new BufferedReader(new FileReader(importExportFile));
@@ -159,8 +159,6 @@ public class SettingsActivity extends Activity {
 
                     sshImportFileReader.close();
 
-                    Log.d("SSH", "Read file. Contents: " + sshImportedKey.toString());
-
                     SSHKey sshKey = SSHKey.getInstance(this);
                     sshKey.setPrivateKey(sshImportedKey.toString());
 
@@ -171,7 +169,7 @@ public class SettingsActivity extends Activity {
                 }
                 break;
             case SSHKey.RequestSSHPublicKeyFileExport:
-                Log.d("SSH", "Trying to write public key to file " + fileUri.getPath());
+                Log.d(this.getClass().getName(), String.format("Trying to write public key to file ", fileUri.getPath()));
 
                 try {
                     BufferedWriter sshExportFileWriter = new BufferedWriter(new FileWriter(importExportFile));
@@ -188,7 +186,7 @@ public class SettingsActivity extends Activity {
                 }
                 break;
             case SSHKey.RequestSSHPrivateKeyFileExport:
-                Log.d("SSH", "Trying to write private key to file " + fileUri.getPath());
+                Log.d(this.getClass().getName(), String.format("Trying to write private key to file ", fileUri.getPath()));
 
                 try {
                     BufferedWriter sshExportFileWriter = new BufferedWriter(new FileWriter(importExportFile));

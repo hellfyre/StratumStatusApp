@@ -60,37 +60,20 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
         Random random = new Random(System.currentTimeMillis());
         Integer jobId = random.nextInt();
         if (jobId < 0) jobId *= -1;
-        Log.d("MAIN", String.format("jobId: %d", jobId));
 
         JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
         boolean jobStarted = false;
 
         List<JobInfo> jobs = scheduler.getAllPendingJobs();
         for (JobInfo job: jobs) {
-            Log.d("MAIN", String.format("Found job with id %d", job.getId()));
             jobStarted = true;
         }
 
         if (!jobStarted) {
             JobInfo.Builder jobInfoBuilder = new JobInfo.Builder(jobId, new ComponentName(this, StatusService.class));
-                jobInfoBuilder.setPeriodic(3000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
-//            jobInfoBuilder.setMinimumLatency(3000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
-            int ret = scheduler.schedule(jobInfoBuilder.build());
-
-            if (ret == JobScheduler.RESULT_SUCCESS) {
-                Log.d("MAIN", "Successfully scheduled the service job");
-            } else if (ret == JobScheduler.RESULT_FAILURE) {
-                Log.d("MAIN", "Failed scheduling the service job");
-            } else {
-                Log.d("MAIN", "Scheduling the service job yielded weird result");
-            }
+            jobInfoBuilder.setPeriodic(900000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+            scheduler.schedule(jobInfoBuilder.build());
         }
-        else Log.d("MAIN", "Job already started");
-
-        /*
-        Intent serviceIntent = new Intent(this, StatusService.class);
-        startService(serviceIntent);
-        */
 
         updateStatus();
     }

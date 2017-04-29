@@ -17,7 +17,7 @@ public class StatusService extends JobService implements SpaceStatusUpdateListen
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        Log.d("SERVICE.onStartJob", "enter");
+        Log.d(this.getClass().getName(), "onStartJob enter");
 
         this.params = params;
 
@@ -30,36 +30,36 @@ public class StatusService extends JobService implements SpaceStatusUpdateListen
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.d("SERVICE.onStartJob", "enter");
+        Log.d(this.getClass().getName(), "onStartJob enter");
         return true;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("SERVICE.onCreate", "enter");
+        Log.d(this.getClass().getName(), "onCreate enter");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("SERVICE.onDestroy", "enter");
+        Log.d(this.getClass().getName(), "onDestroy enter");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("SERVICE.onStartCommand", "enter method");
+        Log.d(this.getClass().getName(), "onStartCommand enter method");
         return START_NOT_STICKY;
     }
 
     @Override
     public void onPreSpaceStatusUpdate(Context context) {
-        Log.d("SERVICE.preStatusUpd", "enter");
+        Log.d(this.getClass().getName(), "preStatusUpd enter");
     }
 
     @Override
     public void onPostSpaceStatusUpdate(Context context) {
-        Log.d("SERVICE.postStatusUpd", "enter");
+        Log.d(this.getClass().getName(), "postStatusUpd enter");
 
         // Update widget
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);

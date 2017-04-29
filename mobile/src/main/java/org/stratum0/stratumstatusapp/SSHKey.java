@@ -82,7 +82,6 @@ public class SSHKey {
     }
 
     public void setPrivateKey(String privateKey) {
-        Log.d("SSHKey", "setPrivateKey " + privateKey);
         SharedPreferences.Editor editor = this.preferences.edit();
         editor.putString("ssh_private_key", privateKey);
         editor.commit();
@@ -115,8 +114,6 @@ public class SSHKey {
         fileIntent.setType("*/*");
         fileIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-        Log.d("FILE", "activity is " + activity.getClass().toString());
-
         activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPrivateKeyFileImport);
     }
 
@@ -130,8 +127,6 @@ public class SSHKey {
         fileIntent.setType("*/*");
         fileIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-        Log.d("FILE", "activity is " + activity.getClass().toString());
-
         activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPrivateKeyFileExport);
     }
 
@@ -144,8 +139,6 @@ public class SSHKey {
         Intent fileIntent = new Intent();
         fileIntent.setType("*/*");
         fileIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-        Log.d("FILE", "activity is " + activity.getClass().toString());
 
         activity.startActivityForResult(fileIntent, SSHKey.RequestSSHPublicKeyFileExport);
     }
