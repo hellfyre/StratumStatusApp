@@ -19,31 +19,32 @@
 
     <PreferenceCategory android:title="@string/pref_header_ssh">
         <EditTextPreference
+            android:defaultValue="@string/pref_ssh_server_default"
             android:key="ssh_server"
             android:title="@string/pref_ssh_server_title"
             android:inputType="textNoSuggestions" />
         <PreferenceScreen
             android:title="@string/pref_ssh_key_title">
             <org.stratum0.stratumstatusapp.SSHPrivateKeyEditPreference
-                android:title="@string/pref_ssh_key_title"/>
+                android:title="@string/pref_ssh_key_edit_title"/>
             <org.stratum0.stratumstatusapp.SSHPublicKeyExportPreference
-                android:title="Export public key"/>
+                android:title="@string/pref_privkey_button_export_public_key_text"/>
             <org.stratum0.stratumstatusapp.SSHPrivateKeyExportPreference
-                android:title="Export private key"/>
+                android:title="@string/pref_privkey_button_export_private_key_text"/>
             <org.stratum0.stratumstatusapp.SSHPrivateKeyImportPreference
-                android:title="Import private key"/>
+                android:title="@string/pref_privkey_button_import_private_key_text"/>
             <org.stratum0.stratumstatusapp.SSHPrivateKeyGeneratePreference
-                android:title="Generate private key"/>
+                android:title="@string/pref_privkey_button_generate_text"/>
         </PreferenceScreen>
         <EditTextPreference
             android:key="ssh_user_open"
             android:title="@string/pref_ssh_user_open_title"
-            android:defaultValue="auf"
+            android:defaultValue="@string/pref_ssh_user_open_default"
             android:inputType="textNoSuggestions" />
         <EditTextPreference
             android:key="ssh_user_close"
             android:title="@string/pref_ssh_user_close_title"
-            android:defaultValue="zu"
+            android:defaultValue="@string/pref_ssh_user_close_default"
             android:inputType="textNoSuggestions" />
         <!-- <CheckBoxPreference
             android:key="ssh_ensure_wlan"

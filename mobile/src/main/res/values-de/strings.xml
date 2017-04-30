@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_open_title">Öffnen</string>
+    <string name="button_openas_title">Öffnen als …</string>
+    <string name="dialog_button_cancel">Abbrechen</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_save">Speichern</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="pref_api_url_title">API URL</string>
+    <string name="pref_header_general">Allgemein</string>
+    <string name="pref_name_title">Name</string>
+    <string name="pref_privkey_button_generate_text">Privaten Schlüssel erzeugen</string>
+    <string name="pref_ssh_server_title">SSH Server</string>
+    <string name="pref_ssh_user_close_title">Nutzer zum Öffnen</string>
+    <string name="pref_ssh_user_open_title">Nutzer zum Schließen</string>
+    <string name="pref_ssh_which_wlans_title">Bestimmte WLANs</string>
+    <string name="ssh_door_idle_text">Hiermit lässt sich die obere Tür steuern</string>
+    <string name="pref_privkey_multiline_hint">Privaten Schlüssel hier einfügen …</string>
+    <string name="pref_ssh_ensure_wlan_title">Nur in bestimmten WLANs ausführen</string>
+    <string name="pref_ssh_key_title">SSH Schlüssel</string>
+    <string name="status_open">Offen</string>
+    <string name="status_closed">Geschlossen</string>
+    <string name="status_unknown">Unbekannt</string>
+    <string name="text_confirm_generate_key">Wirklich einen neuen Schlüssel erzeugen?</string>
+    <string name="text_lastchange_label">Letzte Statusänderung:</string>
+    <string name="text_lastupdate_label">Letztes Update:</string>
+    <string name="text_openedby_label">Geöffnet von:</string>
+    <string name="text_since_label">Seit:</string>
+    <string name="text_status_label">Status:</string>
+    <string name="text_updating">Aktualisiere …</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="button_close_title">Schließen</string>
+    <string name="pref_ssh_key_edit_title">SSH Schlüssel bearbeiten …</string>
+    <string name="pref_privkey_button_export_private_key_text">Privaten Schlüssel exportieren …</string>
+    <string name="pref_privkey_button_export_public_key_text">Öffentlichen Schlüssel exportieren …</string>
+    <string name="pref_privkey_button_import_private_key_text">Privaten Schlüssel importieren …</string>
+</resources>

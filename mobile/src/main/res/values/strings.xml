@@ -7,25 +7,30 @@
 
     <!-- Headers -->
     <string name="pref_header_general">General</string>
-    <string name="pref_header_ssh">SSH</string>
+    <string name="pref_header_ssh" translatable="false">SSH</string>
 
     <!-- General settings -->
     <string name="pref_name_title">Name</string>
-    <string name="pref_name_default">Player 1</string>
+    <string name="pref_name_default" translatable="false">Player 1</string>
 
     <string name="pref_api_url_title">API URL</string>
     <string name="pref_api_url_default" translatable="false">http://status.stratum0.org</string>
-    <string name="pref_ssh_key_title">SSH Private Key</string>
+    <string name="pref_ssh_key_title">SSH Key</string>
+    <string name="pref_ssh_key_edit_title">Edit SSH Key …</string>
     <string name="pref_ssh_server_title">SSH Server</string>
+    <string name="pref_ssh_server_default" translatable="false">powerberry.fritz.box</string>
     <string name="pref_ssh_user_open_title">Opening user</string>
+    <string name="pref_ssh_user_open_default" translatable="false">auf</string>
     <string name="pref_ssh_user_close_title">Closing user</string>
+    <string name="pref_ssh_user_close_default" translatable="false">zu</string>
     <string name="pref_ssh_ensure_wlan_title">Only execute in certain wifis</string>
     <string name="pref_ssh_which_wlans_title">Certain wifis</string>
 
     <!-- SSH private key menu -->
     <string name="pref_privkey_multiline_hint">Paste private key here…</string>
-    <string name="pref_privkey_button_importfromfile_text">Import from file…</string>
-    <string name="pref_privkey_button_exporttofile_text">Export to file…</string>
+    <string name="pref_privkey_button_export_public_key_text">Export public key …</string>
+    <string name="pref_privkey_button_export_private_key_text">Export private key …</string>
+    <string name="pref_privkey_button_import_private_key_text">Import private key …</string>
     <string name="pref_privkey_button_generate_text">Generate private key</string>
 
     <!-- StatusActivity -->
