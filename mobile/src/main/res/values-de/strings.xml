@@ -22,7 +22,7 @@
     <string name="status_closed">Geschlossen</string>
     <string name="status_unknown">Unbekannt</string>
     <string name="text_confirm_generate_key">Wirklich einen neuen Schlüssel erzeugen?</string>
-    <string name="text_lastchange_label">Letzte Statusänderung:</string>
+    <string name="text_lastchange_label">Letzte Änderung:</string>
     <string name="text_lastupdate_label">Letztes Update:</string>
     <string name="text_openedby_label">Geöffnet von:</string>
     <string name="text_since_label">Seit:</string>
@@ -34,4 +34,6 @@
     <string name="pref_privkey_button_export_private_key_text">Privaten Schlüssel exportieren …</string>
     <string name="pref_privkey_button_export_public_key_text">Öffentlichen Schlüssel exportieren …</string>
     <string name="pref_privkey_button_import_private_key_text">Privaten Schlüssel importieren …</string>
+    <string name="pref_privkey_dialog_title">Privater Schlüssel</string>
+    <string name="pref_privkey_dialog_message">Passphrase für privaten Schlüssel eingeben</string>
 </resources>

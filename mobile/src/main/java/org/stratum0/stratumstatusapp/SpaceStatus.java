@@ -23,6 +23,7 @@ public class SpaceStatus {
     private SpaceStatus() {
         status = Status.UNKNOWN;
         openedBy = "";
+        lastUpdate = Calendar.getInstance();
         lastChange = Calendar.getInstance();
         since = Calendar.getInstance();
     }

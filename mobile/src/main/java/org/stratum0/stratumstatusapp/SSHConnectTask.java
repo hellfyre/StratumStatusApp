@@ -1,14 +1,18 @@
 package org.stratum0.stratumstatusapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.KeyPair;
 import com.jcraft.jsch.Session;
 
 import java.io.ByteArrayOutputStream;
@@ -23,13 +27,24 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
 
     private ArrayList<SSHConnectListener> receiverList = new ArrayList<>();
     private Context context;
+    private SharedPreferences prefs;
+    private JSch jsch;
+    private boolean dialogDone;
+
+    private byte[] privateKey;
+    private byte[] privateKeyPassphrase;
 
     public SSHConnectTask(Context context) {
         this.context = context;
+        this.prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
+        this.privateKey = this.prefs.getString("ssh_private_key", "").getBytes();
+        this.jsch = new JSch();
     }
 
     @Override
     protected String doInBackground(String... strings) {
+
+        while (!this.dialogDone) {}
 
         String operation = new String("close");
         if (strings.length > 0 && !strings[0].isEmpty()) {
@@ -38,23 +53,26 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
 
         publishProgress(operation);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
         String user = prefs.getString("ssh_user_" + operation, "zu");
         String server = prefs.getString("ssh_server", "localhost");
-        String privateKey = prefs.getString("ssh_private_key", "");
 
-        JSch jsch = new JSch();
         Session sshSession = null;
         try {
-            sshSession = jsch.getSession(user, server);
-            NullUserInfo nui = new NullUserInfo();
-            sshSession.setUserInfo(nui);
+            sshSession = this.jsch.getSession(user, server);
+            NullUserInfo userInfo = new NullUserInfo();
+            sshSession.setUserInfo(userInfo);
         } catch (JSchException e) {
             e.printStackTrace();
         }
 
         try {
-            jsch.addIdentity("id_rsa", privateKey.getBytes(), null, null);
+            if (this.privateKeyPassphrase != null) {
+                Log.d(this.getClass().getName(), String.format("Using passphrase %s", this.privateKeyPassphrase.toString()));
+            }
+            else {
+                Log.d(this.getClass().getName(), "Passphrase is null");
+            }
+            this.jsch.addIdentity("id_rsa", this.privateKey, null, this.privateKeyPassphrase);
         } catch (JSchException e) {
             e.printStackTrace();
         }
@@ -89,6 +107,46 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
         Log.d(this.getClass().getName(), "Connect successful");
 
         return baos.toString();
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        this.dialogDone = false;
+
+        try {
+            KeyPair keyPair = KeyPair.load(this.jsch, this.privateKey, null);
+
+            if (keyPair.isEncrypted()) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.context);
+                alertDialogBuilder.setView(R.layout.dialog_edittext_passphrase);
+                alertDialogBuilder.setTitle(R.string.pref_privkey_dialog_title);
+                alertDialogBuilder.setMessage(R.string.pref_privkey_dialog_message);
+                alertDialogBuilder.setPositiveButton(this.context.getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog alertDialog = (AlertDialog) dialog;
+                        EditText passphrasefield = (EditText) alertDialog.findViewById(R.id.text_passphrase);
+                        SSHConnectTask.this.privateKeyPassphrase = passphrasefield.getText().toString().getBytes();
+                        SSHConnectTask.this.dialogDone = true;
+                    }
+                }).setNegativeButton(this.context.getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SSHConnectTask.this.dialogDone = true;
+                    }
+                });
+
+                alertDialogBuilder.create().show();
+            }
+            else {
+                this.privateKeyPassphrase = null;
+                this.dialogDone = true;
+            }
+        } catch (JSchException e) {
+            Log.e(this.getClass().getName(), e.getLocalizedMessage());
+        }
     }
 
     @Override
