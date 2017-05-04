@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -138,7 +137,6 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
                 AlertDialog.Builder nameDialogBuilder = new AlertDialog.Builder(this);
                 nameDialogBuilder
                         .setTitle(getString(R.string.button_openas_title))
-//                        .setMessage("Gimme name!!")
                         .setView(R.layout.dialog_edittext_singleline)
                         .setNegativeButton(getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {
                             @Override
@@ -148,7 +146,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 AlertDialog d = (AlertDialog) dialog;
-                                EditText textStatusName = (EditText) d.findViewById(R.id.text_status_name);
+                                EditText textStatusName = (EditText) d.findViewById(R.id.text_singleline);
                                 changeStatus(SpaceStatus.Status.OPEN, textStatusName.getText().toString());
                             }
                         });
@@ -157,7 +155,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
                 AlertDialog nameDialog = nameDialogBuilder.create();
                 nameDialog.show();
 
-                EditText textStatusName = (EditText) nameDialog.findViewById(R.id.text_status_name);
+                EditText textStatusName = (EditText) nameDialog.findViewById(R.id.text_singleline);
                 textStatusName.setText(prefs.getString("name", getString(R.string.pref_name_default)));
 
                 return;

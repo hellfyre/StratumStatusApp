@@ -28,7 +28,7 @@ public class SSHPrivateKeyEditPreference extends DialogPreference {
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        textPrivateKey = (EditText) view.findViewById(R.id.text_private_key);
+        textPrivateKey = (EditText) view.findViewById(R.id.text_multiline);
         textPrivateKey.setHint(R.string.pref_privkey_multiline_hint);
         updatePrivateKeyEdit();
     }
