@@ -19,6 +19,7 @@ public class SpaceStatus {
     private String openedBy;
     private Calendar lastChange;
     private Calendar since;
+    private String error;
 
     private SpaceStatus() {
         status = Status.UNKNOWN;
@@ -26,6 +27,7 @@ public class SpaceStatus {
         lastUpdate = Calendar.getInstance();
         lastChange = Calendar.getInstance();
         since = Calendar.getInstance();
+        error = "";
     }
 
     public static SpaceStatus getInstance() { return instance; }
@@ -46,12 +48,28 @@ public class SpaceStatus {
 
     public Calendar getSince() { return since; }
 
+    public String getError() {
+        return this.error;
+    }
+
     public void update(Status status, String openedBy, Calendar lastChange, Calendar since) {
         this.lastUpdate = Calendar.getInstance();
         this.status = status;
         this.openedBy = openedBy;
         this.lastChange = lastChange;
         this.since = since;
+        this.error = "";
+    }
+
+    public void updateOffline(String error) {
+        this.lastUpdate = Calendar.getInstance();
+        this.error = error;
+        if (!this.status.equals(Status.UNKNOWN)) {
+            this.status = Status.UNKNOWN;
+            this.openedBy = "";
+            this.since = this.lastUpdate;
+            this.lastChange = this.lastUpdate;
+        }
     }
 
 }

@@ -58,10 +58,12 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
             connection.disconnect();
         } catch (MalformedURLException e) {
             Log.e(this.getClass().getName(), e.getLocalizedMessage());
-            return status.getStatus();
+            status.updateOffline(e.getLocalizedMessage());
+            return isOpen;
         } catch (IOException e) {
             Log.e(this.getClass().getName(), e.getLocalizedMessage());
-            return status.getStatus();
+            status.updateOffline(e.getLocalizedMessage());
+            return isOpen;
         }
 
         Log.d(this.getClass().getName(), "Result: " + result);
@@ -95,7 +97,7 @@ public class SpaceStatusUpdateTask extends AsyncTask <Void, Void, SpaceStatus.St
             }
         }
 
-        return status.getStatus();
+        return isOpen;
     }
 
     @Override

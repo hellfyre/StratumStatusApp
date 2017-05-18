@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -221,6 +222,10 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
                 textStatus.setText(getString(R.string.status_unknown));
                 imageStatus.setImageResource(R.drawable.stratum0_logo);
                 buttonClose.setEnabled(true);
+                String error = status.getError();
+                if (!error.isEmpty()) {
+                    Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+                }
                 break;
         }
 
