@@ -18,7 +18,7 @@
     <string name="pref_ssh_key_title">SSH Key</string>
     <string name="pref_ssh_key_edit_title">Edit SSH Key …</string>
     <string name="pref_ssh_server_title">SSH Server</string>
-    <string name="pref_ssh_server_default" translatable="false">powerberry.fritz.box</string>
+    <string name="pref_ssh_server_default" translatable="false">powerberry.s0</string>
     <string name="pref_ssh_user_open_title">Opening user</string>
     <string name="pref_ssh_user_open_default" translatable="false">auf</string>
     <string name="pref_ssh_user_close_title">Closing user</string>
