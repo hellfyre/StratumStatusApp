@@ -264,8 +264,9 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
 
     @Override
     public void onPostSpaceStatusChange(Context context, Integer statusCode) {
-        if (statusCode == 200) {
-            updateStatus();
+        updateStatus();
+        if (statusCode != 200) {
+            Toast.makeText(context, String.format("Server responded with status %d", statusCode), Toast.LENGTH_LONG).show();
         }
     }
 }
