@@ -184,8 +184,8 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
         textStatus.setText(getString(R.string.text_updating));
         textOpenedBy.setText("");
         textSince.setText("");
-        textLastUpdate.setText("");
         textLastChange.setText("");
+        textLastUpdate.setText("");
     }
 
     @Override

@@ -45,7 +45,7 @@
     <string name="text_openedby_label">Opened by:</string>
     <string name="text_since_label">Since:</string>
     <string name="text_lastupdate_label">Last update:</string>
-    <string name="text_lastchange_label">Last status change:</string>
+    <string name="text_lastchange_label">Changed:</string>
 
     <string name="ssh_door_idle_text">This controls the upper door</string>
 

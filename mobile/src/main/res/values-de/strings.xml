@@ -22,7 +22,7 @@
     <string name="status_closed">Geschlossen</string>
     <string name="status_unknown">Unbekannt</string>
     <string name="text_confirm_generate_key">Wirklich einen neuen Schlüssel erzeugen?</string>
-    <string name="text_lastchange_label">Letzte Änderung:</string>
+    <string name="text_lastchange_label">Geändert:</string>
     <string name="text_lastupdate_label">Letztes Update:</string>
     <string name="text_openedby_label">Geöffnet von:</string>
     <string name="text_since_label">Seit:</string>

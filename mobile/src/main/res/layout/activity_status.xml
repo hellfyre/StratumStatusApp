@@ -1,236 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.stratum0.stratumstatusapp.StatusActivity">
-
-    <android.support.v7.widget.CardView
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/cardview_status">
+        android:layout_height="match_parent"
+        tools:context="org.stratum0.stratumstatusapp.StatusActivity">
 
-
-        <LinearLayout
-            android:orientation="vertical"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/cardview_status">
+
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="12dp" >
+                android:layout_height="match_parent">
 
-                <ImageView
-                    android:src="@drawable/stratum0_logo"
-                    android:layout_width="@android:dimen/notification_large_icon_width"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/image_status"
-                    android:scaleType="fitStart"
-                    android:cropToPadding="false"
-                    android:adjustViewBounds="true"
-                    android:clickable="true"
-                    android:onClick="buttonUpdateStatus"/>
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="wrap_content" />
-
-                <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="3"
-                    android:rowCount="5">
+                    android:layout_height="match_parent"
+                    android:padding="12dp" >
 
-                    <TextView
-                        android:id="@+id/text_status_label"
-                        android:layout_width="wrap_content"
+                    <ImageView
+                        android:src="@drawable/stratum0_logo"
+                        android:layout_width="@android:dimen/notification_large_icon_width"
                         android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="0"
-                        android:text="@string/text_status_label" />
-
-                    <TextView
-                        android:id="@+id/text_openedby_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="1"
-                        android:text="@string/text_openedby_label" />
-
-                    <TextView
-                        android:id="@+id/text_since_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="2"
-                        android:text="@string/text_since_label" />
-
-                    <TextView
-                        android:id="@+id/text_lastupdate_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="3"
-                        android:text="@string/text_lastupdate_label" />
-
-                    <TextView
-                        android:id="@+id/text_lastchange_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="4"
-                        android:text="@string/text_lastchange_label" />
+                        android:id="@+id/image_status"
+                        android:scaleType="fitStart"
+                        android:cropToPadding="false"
+                        android:adjustViewBounds="true"
+                        android:clickable="true"
+                        android:onClick="buttonUpdateStatus"/>
 
                     <Space
                         android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_row="0"
-                        android:layout_rowSpan="5"/>
+                        android:columnCount="3"
+                        android:rowCount="5">
 
-                    <TextView
-                        android:id="@+id/text_status_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_row="0" />
+                        <TextView
+                            android:id="@+id/text_status_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="0"
+                            android:text="@string/text_status_label" />
 
-                    <TextView
-                        android:id="@+id/text_openedby_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_row="1" />
+                        <TextView
+                            android:id="@+id/text_openedby_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="1"
+                            android:text="@string/text_openedby_label" />
 
-                    <TextView
-                        android:id="@+id/text_since_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_row="2" />
+                        <TextView
+                            android:id="@+id/text_since_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="2"
+                            android:text="@string/text_since_label" />
 
-                    <TextView
-                        android:id="@+id/text_lastupdate_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_row="3" />
+                        <TextView
+                            android:id="@+id/text_lastchange_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="3"
+                            android:text="@string/text_lastchange_label" />
 
-                    <TextView
-                        android:id="@+id/text_lastchange_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_row="4" />
+                        <TextView
+                            android:id="@+id/text_lastupdate_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_row="4"
+                            android:text="@string/text_lastupdate_label" />
 
-                </GridLayout>
+                        <Space
+                            android:layout_width="12dp"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:layout_row="0"
+                            android:layout_rowSpan="5"/>
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/text_status_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="0" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/text_openedby_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="1" />
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_open_title"
-                    android:id="@+id/button_open"
-                    android:onClick="buttonOpenClose"
-                    android:layout_weight="1"
-                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
+                        <TextView
+                            android:id="@+id/text_since_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="2" />
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_close_title"
-                    android:id="@+id/button_close"
-                    android:onClick="buttonOpenClose"
-                    android:layout_weight="1"
-                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/text_lastchange_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="3" />
 
-        </LinearLayout>
+                        <TextView
+                            android:id="@+id/text_lastupdate_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="2"
+                            android:layout_row="4" />
 
-    </android.support.v7.widget.CardView>
+                    </GridLayout>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cardview_status"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/cardview_ssh">
+                </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="12dp">
-
-                <ImageView
-                    android:src="@drawable/door"
-                    android:layout_width="@android:dimen/notification_large_icon_width"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitStart"
-                    android:cropToPadding="false"
-                    android:adjustViewBounds="true" />
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:text="@string/ssh_door_idle_text"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="10dp"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/text_ssh" />
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_open_title"
+                        android:id="@+id/button_open"
+                        android:onClick="buttonOpenClose"
+                        android:layout_weight="1"
+                        style="@android:style/Widget.Material.Button.Borderless.Colored" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_close_title"
+                        android:id="@+id/button_close"
+                        android:onClick="buttonOpenClose"
+                        android:layout_weight="1"
+                        style="@android:style/Widget.Material.Button.Borderless.Colored" />
+                </LinearLayout>
 
             </LinearLayout>
 
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardview_status"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/cardview_ssh">
+
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <Button
-                    android:text="@string/button_open_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button_ssh_open"
-                    android:onClick="sshDoorOpenClose"
-                    android:layout_weight="1"
-                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="12dp">
 
-                <Button
-                    android:text="@string/button_close_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/button_ssh_close"
-                    android:onClick="sshDoorOpenClose"
-                    android:layout_weight="1"
-                    style="@android:style/Widget.Material.Button.Borderless.Colored" />
+                    <ImageView
+                        android:src="@drawable/door"
+                        android:layout_width="@android:dimen/notification_large_icon_width"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitStart"
+                        android:cropToPadding="false"
+                        android:adjustViewBounds="true" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="@string/ssh_door_idle_text"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/text_ssh" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:text="@string/button_open_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button_ssh_open"
+                        android:onClick="sshDoorOpenClose"
+                        android:layout_weight="1"
+                        style="@android:style/Widget.Material.Button.Borderless.Colored" />
+
+                    <Button
+                        android:text="@string/button_close_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button_ssh_close"
+                        android:onClick="sshDoorOpenClose"
+                        android:layout_weight="1"
+                        style="@android:style/Widget.Material.Button.Borderless.Colored" />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
