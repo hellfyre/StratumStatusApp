@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Author Matthias Uschok <dev@uschok.de>
  */
 
-public class SSHConnectTask extends AsyncTask <String, String, String> {
+class SSHConnectTask extends AsyncTask <String, String, String> {
 
     private ArrayList<SSHConnectListener> receiverList = new ArrayList<>();
     private Context context;
@@ -34,7 +34,7 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
     private byte[] privateKey;
     private byte[] privateKeyPassphrase;
 
-    public SSHConnectTask(Context context) {
+    SSHConnectTask(Context context) {
         this.context = context;
         this.prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
         this.privateKey = this.prefs.getString("ssh_private_key", "").getBytes();
@@ -46,7 +46,7 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
 
         while (!this.dialogDone) {}
 
-        String operation = new String("close");
+        String operation = "close";
         if (strings.length > 0 && !strings[0].isEmpty()) {
             operation = strings[0].toLowerCase();
         }
@@ -56,25 +56,25 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
         String user = prefs.getString("ssh_user_" + operation, "zu");
         String server = prefs.getString("ssh_server", "localhost");
 
-        Session sshSession = null;
+        Session sshSession;
         try {
             sshSession = this.jsch.getSession(user, server);
             NullUserInfo userInfo = new NullUserInfo();
             sshSession.setUserInfo(userInfo);
         } catch (JSchException e) {
-            e.printStackTrace();
+            return e.getLocalizedMessage();
         }
 
         try {
             if (this.privateKeyPassphrase != null) {
-                Log.d(this.getClass().getName(), String.format("Using passphrase %s", this.privateKeyPassphrase.toString()));
+                Log.d(this.getClass().getName(), "Using passphrase");
             }
             else {
                 Log.d(this.getClass().getName(), "Passphrase is null");
             }
             this.jsch.addIdentity("id_rsa", this.privateKey, null, this.privateKeyPassphrase);
         } catch (JSchException e) {
-            e.printStackTrace();
+            return e.getLocalizedMessage();
         }
 
         Log.d(this.getClass().getName(), "Trying to connect...");
@@ -83,7 +83,7 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
         baos.write("Output: ".getBytes(), 0, 8);
 
 
-        Channel channel = null;
+        Channel channel;
         try {
             sshSession.connect(10000);
 
@@ -100,8 +100,7 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
 
         } catch (JSchException e) {
             Log.d(this.getClass().getName(), "Connect NOT successful");
-            e.printStackTrace();
-            return "Could not connect";
+            return String.format("Could not connect: %s", e.getLocalizedMessage());
         }
 
         Log.d(this.getClass().getName(), "Connect successful");
@@ -145,6 +144,9 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
                 this.dialogDone = true;
             }
         } catch (JSchException e) {
+            for (SSHConnectListener receiver : receiverList) {
+                receiver.onPreSSHConnectError(e.getLocalizedMessage());
+            }
             Log.e(this.getClass().getName(), e.getLocalizedMessage());
         }
     }
@@ -153,12 +155,12 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
 
-        String operation = new String("close");
+        String operation = "close";
         if (values.length > 0 && !values[0].isEmpty()) {
             operation = values[0].toLowerCase();
         }
         for (SSHConnectListener receiver : receiverList) {
-            receiver.onPreSSHConnect(operation);
+            receiver.onSSHProgressUpdate(operation);
         }
     }
 
@@ -170,7 +172,7 @@ public class SSHConnectTask extends AsyncTask <String, String, String> {
         }
     }
 
-    public void addListener(SSHConnectListener receiver) {
+    void addListener(SSHConnectListener receiver) {
         receiverList.add(receiver);
     }
 }

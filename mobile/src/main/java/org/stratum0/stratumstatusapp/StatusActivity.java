@@ -246,7 +246,12 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
     }
 
     @Override
-    public void onPreSSHConnect(String operation) {
+    public void onPreSSHConnectError(String error) {
+        testSSH.setText(error);
+    }
+
+    @Override
+    public void onSSHProgressUpdate(String operation) {
         switch (operation) {
             case "open":
                 testSSH.setText("Opening door...");
@@ -259,7 +264,7 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
 
     @Override
     public void onPostSSHConnect(String result) {
-        testSSH.setText("Door says: " + result);
+        testSSH.setText(String.format("Door says: %s", result));
     }
 
     @Override

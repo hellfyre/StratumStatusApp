@@ -42,9 +42,9 @@
     <string name="button_openas_title">Open as …</string>
     <string name="button_close_title">Close</string>
     <string name="text_status_label">Status:</string>
-    <string name="text_openedby_label">Opened by:</string>
+    <string name="text_openedby_label">By:</string>
     <string name="text_since_label">Since:</string>
-    <string name="text_lastupdate_label">Last update:</string>
+    <string name="text_lastupdate_label">Updated:</string>
     <string name="text_lastchange_label">Changed:</string>
 
     <string name="ssh_door_idle_text">This controls the upper door</string>

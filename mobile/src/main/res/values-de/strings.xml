@@ -23,8 +23,8 @@
     <string name="status_unknown">Unbekannt</string>
     <string name="text_confirm_generate_key">Wirklich einen neuen Schlüssel erzeugen?</string>
     <string name="text_lastchange_label">Geändert:</string>
-    <string name="text_lastupdate_label">Letztes Update:</string>
-    <string name="text_openedby_label">Geöffnet von:</string>
+    <string name="text_lastupdate_label">Aktualisiert:</string>
+    <string name="text_openedby_label">Durch:</string>
     <string name="text_since_label">Seit:</string>
     <string name="text_status_label">Status:</string>
     <string name="text_updating">Aktualisiere …</string>
