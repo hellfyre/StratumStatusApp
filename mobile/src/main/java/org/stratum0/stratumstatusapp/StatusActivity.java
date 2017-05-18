@@ -11,7 +11,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,6 +77,16 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
         }
 
         updateStatus();
+
+        final Handler updateStringHandler = new Handler();
+        final Runnable updateStringRunnable = new Runnable() {
+            @Override
+            public void run() {
+                updateStringHandler.postDelayed(this, 30000);
+                textLastUpdate.setText(DateUtils.getRelativeTimeSpanString(status.getLastUpdate().getTimeInMillis()));
+            }
+        };
+        updateStringHandler.postDelayed(updateStringRunnable, 30000);
     }
 
     @Override
@@ -214,8 +226,8 @@ public class StatusActivity extends Activity implements SpaceStatusUpdateListene
 
         textOpenedBy.setText(status.getOpenedBy());
         textSince.setText(df.format(status.getSince().getTime()));
-        textLastUpdate.setText(df.format(status.getLastUpdate().getTime()));
         textLastChange.setText(df.format(status.getLastChange().getTime()));
+        textLastUpdate.setText(DateUtils.getRelativeTimeSpanString(status.getLastUpdate().getTimeInMillis()));
         buttonOpen.setText(buttonOpenStringID);
 
         // Update widget
